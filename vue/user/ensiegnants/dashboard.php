@@ -18,7 +18,7 @@
 
    <section class="flex">
 
-      <a href="dashboard.php" class="logo">Admin.</a>
+      <a href="dashboard.php" class="logo">ensiegnants.</a>
 
       <form action="search_page.php" method="post" class="search-form">
          <input type="text" name="search" placeholder="search here..." required maxlength="100">
@@ -43,22 +43,22 @@
    </div>
    <div class="profile">
       <img src="../../../public/images/pic-7.jpg" class="image" alt="">
-      <h3 class="name">meryam salhi</h3>
+      <h3 class="name">ensiegnants</h3>
       <a href="../pages/about.php" class="btn">logout</a>
    </div>
    <nav class="navbar">
-      <a href="dashboard.php"><i class="fas fa-home"></i><span>home</span></a>
-      <a href="playlists.php"><i class="fa-solid fa-user"></i><span>les utilisateurs</span></a>
-      <a href="contents.php"><i class="fa-solid fa-check"></i><span>validation des ensiegnants </span></a>
-      <a href="comments.php"><i class="fa-solid fa-chart-pie"></i><span>statistiques globales</span></a>
-      <a href="comments.php"><i class="fa-solid fa-bars"></i><span>gestion content</span></a>
+      <a href="#"><i class="fas fa-home"></i><span>home</span></a>
+      <a href="#"><i class="fa-solid fa-book"></i><span>Mes cours</span></a>
+      <a href="#"><i class="fa-solid fa-list"></i><span>gestion cours</span></a>
+      <a href="#"><i class="fa-solid fa-chart-pie"></i><span>statistiques</span></a>
       <a href="../pages/about.php" onclick="return confirm('logout from this website?');"><i class="fas fa-right-from-bracket"></i><span>logout</span></a>
    </nav>
 
 </div>
 
 </div>
-<script src="../../../public/js/admin.js"></script>
+
+<script src="../../../public/css/admin.css"></script>
 
    
 </body>

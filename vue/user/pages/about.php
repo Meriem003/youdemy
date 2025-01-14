@@ -34,6 +34,7 @@
       </div>
 
       <div class="profile">
+      <h3>please login or register</h3>
          <div class="flex-btn">
             <a href="../../auth/login.php" class="option-btn">login</a>
             <a href="../../auth/register.php" class="option-btn">register</a>
