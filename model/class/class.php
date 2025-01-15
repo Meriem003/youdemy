@@ -121,7 +121,7 @@ class Admin extends User {
     }
 
     public function validateTeacher($teacher) {
-
+        
     }
 
     public function manageUsers() {
