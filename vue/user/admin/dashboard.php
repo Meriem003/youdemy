@@ -49,7 +49,7 @@
    <nav class="navbar">
       <a href="utilisateurs.php"><i class="fa-solid fa-user"></i><span>les utilisateurs</span></a>
       <a href="ensiegnants.php"><i class="fa-solid fa-check"></i><span>validation ensiegnants </span></a>
-      <a href="statistiques.php"><i class="fa-solid fa-chart-pie"></i><span>statistiques globales</span></a>
+      <a href="dashboard.php"><i class="fa-solid fa-chart-pie"></i><span>statistiques globales</span></a>
       <a href="content.php"><i class="fa-solid fa-bars"></i><span>gestion content</span></a>
       <a href="../pages/about.php" onclick="return confirm('logout from this website?');"><i class="fas fa-right-from-bracket"></i><span>logout</span></a>
    </nav>

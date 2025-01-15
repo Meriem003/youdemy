@@ -116,16 +116,26 @@ class Teacher extends User {
 }
 
 class Admin extends User {
+    private $pdo;
+
     public function __construct($pdo) {
         parent::__construct($pdo);
+        $this->pdo = $pdo; 
     }
 
     public function validateTeacher($teacher) {
-        
+
     }
 
     public function manageUsers() {
-
+        $sql = "SELECT * FROM users";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $users = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $users[] = $row;
+        }
+        return $users;
     }
 
     public function manageContent() {
