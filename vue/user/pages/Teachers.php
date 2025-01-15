@@ -33,7 +33,7 @@
       </div>
 
       <div class="profile">
-      
+      <h3>please login or register</h3>
          <div class="flex-btn">
             <a href="../../auth/login.php" class="option-btn">login</a>
             <a href="../../auth/register.php" class="option-btn">register</a>
@@ -53,7 +53,7 @@
    <div class="profile">
       <img src="../../../public/images/pic-1.jpg" class="image" alt="">
       <h3 class="name">user</h3>
-      <p class="role">role</p>
+      <p class="role">Étudiant</p>
       <a href="../../auth/register.php" class="btn">create account</a>
    </div>
 

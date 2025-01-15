@@ -3,7 +3,7 @@ CREATE TABLE Users (
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role ENUM('student', 'teacher', 'admin') NOT NULL,
+    role ENUM('student', 'teacher') NOT NULL,
     status ENUM('activer', 'inactive', 'banned') NOT NULL DEFAULT 'activer',
     dataCourse DATETIME DEFAULT CURRENT_TIMESTAMP
 );

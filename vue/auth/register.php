@@ -11,7 +11,6 @@
 
    <!-- custom css file link  -->
    <link rel="stylesheet" href="../../public/css/style.css">
-">
 
 </head>
 <body>
@@ -54,16 +53,15 @@
    <div class="profile">
       <img src="../../public/images/pic-1.jpg" class="image" alt="">
       <h3 class="name">user</h3>
-      <p class="role">role</p>
       <a href="register.php" class="btn">create account</a>
    </div>
 
    <nav class="navbar">
-      <a href="about.php"><i class="fas fa-home"></i><span>home</span></a>
-      <a href="courses.php"><i class="fas fa-graduation-cap"></i><span>courses</span></a>
-      <a href="teachers.php"><i class="fas fa-chalkboard-user"></i><span>teachers</span></a>
-      <a href="ourCourses.php"><i class="fa-solid fa-book-open"></i><span>mes Courses</span></a>
-      <a href="contact.php"><i class="fas fa-headset"></i><span>contact us</span></a>
+      <a href="../user/pages/about.php"><i class="fas fa-home"></i><span>home</span></a>
+      <a href="../user/pages/courses.php"><i class="fas fa-graduation-cap"></i><span>courses</span></a>
+      <a href="../user/pages/teachers.php"><i class="fas fa-chalkboard-user"></i><span>teachers</span></a>
+      <a href="../user/pages/ourCourses.php"><i class="fa-solid fa-book-open"></i><span>mes Courses</span></a>
+      <a href="../user/pages/contact.php"><i class="fas fa-headset"></i><span>contact us</span></a>
    </nav>
 
 </div>
@@ -78,42 +76,17 @@
       <input type="email" name="email" placeholder="enter your email" required maxlength="50" class="box">
       <p>your password <span>*</span></p>
       <input type="password" name="pass" placeholder="enter your password" required maxlength="20" class="box">
-      <!-- <p>confirm password <span>*</span></p>
-      <input type="password" name="c_pass" placeholder="confirm your password" required maxlength="20" class="box"> -->
       <p>role<span>*</span></p>
       <select name="role" id="role" required maxlength="50" class="box">
         <option value="Enseignant">teacher</option>
         <option value="Étudiant">Étudiant</option>
       </select>
-      <p>select profile <span>*</span></p>
-      <input type="file" accept="image/*" required class="box">
       <input type="submit" value="register new" name="submit" class="btn">
    </form>
 
 </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-<footer class="footer">
-
-   &copy; copyright @ 2022 by <span>meryama</span> | all rights reserved!
-
-</footer>
-
-<!-- custom js file link  -->
 <script src="../../public/js/script.js"></script>
 
-   
 </body>
 </html>

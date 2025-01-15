@@ -54,6 +54,7 @@
    <div class="profile">
       <img src="../../../public/images/pic-1.jpg" class="image" alt="">
       <h3 class="name">user</h3>
+      <p class="role">Étudiant</p>
       <a href="../../auth/register.php" class="btn">create account</a>
    </div>
 
@@ -142,58 +143,7 @@
             </div>
          </div>
       </div>
-
-      <div class="box">
-         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Necessitatibus, suscipit a. Quibusdam, dignissimos consectetur. Sed ullam iusto eveniet qui aut quibusdam vero voluptate libero facilis fuga. Eligendi eaque molestiae modi?</p>
-         <div class="student">
-            <img src="../../../public/images/pic-3.jpg" alt="">
-            <div>
-               <h3>john deo</h3>
-               <div class="stars">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star-half-alt"></i>
-               </div>
-            </div>
-         </div>
-      </div>
-
-      <div class="box">
-         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Necessitatibus, suscipit a. Quibusdam, dignissimos consectetur. Sed ullam iusto eveniet qui aut quibusdam vero voluptate libero facilis fuga. Eligendi eaque molestiae modi?</p>
-         <div class="student">
-            <img src="../../../publicc/images/pic-4.jpg" alt="">
-            <div>
-               <h3>john deo</h3>
-               <div class="stars">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star-half-alt"></i>
-               </div>
-            </div>
-         </div>
-      </div>
-
-      <div class="box">
-         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Necessitatibus, suscipit a. Quibusdam, dignissimos consectetur. Sed ullam iusto eveniet qui aut quibusdam vero voluptate libero facilis fuga. Eligendi eaque molestiae modi?</p>
-         <div class="student">
-            <img src=".../../../public/images/pic-5.jpg" alt="">
-            <div>
-               <h3>john deo</h3>
-               <div class="stars">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star-half-alt"></i>
-               </div>
-            </div>
-         </div>
-      </div>
-
+      
       <div class="box">
          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Necessitatibus, suscipit a. Quibusdam, dignissimos consectetur. Sed ullam iusto eveniet qui aut quibusdam vero voluptate libero facilis fuga. Eligendi eaque molestiae modi?</p>
          <div class="student">

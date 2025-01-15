@@ -31,6 +31,8 @@
          <div id="user-btn" class="fas fa-user"></div>
          <div id="toggle-btn" class="fas fa-sun"></div>
       </div>
+
+
    </section>
 
 </header>
