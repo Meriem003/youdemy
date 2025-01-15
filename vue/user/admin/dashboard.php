@@ -10,7 +10,7 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
 
    <!-- custom css file link  -->
-   <link rel="stylesheet" href="../../../public/css/admin.css">
+   <link rel="stylesheet" href="../../../public/css/style.css">
 
 </head>
 <body>
@@ -49,7 +49,7 @@
    <nav class="navbar">
       <a href="dashboard.php"><i class="fas fa-home"></i><span>home</span></a>
       <a href="playlists.php"><i class="fa-solid fa-user"></i><span>les utilisateurs</span></a>
-      <a href="contents.php"><i class="fa-solid fa-check"></i><span>validation des ensiegnants </span></a>
+      <a href="contents.php"><i class="fa-solid fa-check"></i><span>validation ensiegnants </span></a>
       <a href="comments.php"><i class="fa-solid fa-chart-pie"></i><span>statistiques globales</span></a>
       <a href="comments.php"><i class="fa-solid fa-bars"></i><span>gestion content</span></a>
       <a href="../pages/about.php" onclick="return confirm('logout from this website?');"><i class="fas fa-right-from-bracket"></i><span>logout</span></a>
