@@ -13,11 +13,6 @@ class User {
         $this->pdo = $pdo;
     }
 
-    // Getters and setters
-    public function setId($id) {
-        $this->id = $id;
-    }
-
     public function setName($name) {
         $this->name = $name;
     }
@@ -42,13 +37,36 @@ class User {
         $this->createdAt = $createdAt;
     }
 
-    public function login() {
-
+    public function loginFunc($email,$password){
+        $stmt = $this->pdo->prepare("SELECT * FROM  users WHERE email=?");
+        $stmt->execute([$email]);
+        $myuser = $stmt->fetch();
+        if($myuser && password_verify($password,$myuser["password"])){
+           $_SESSION["name"]=$myuser["name"];
+           $_SESSION["email"]=$myuser["email"];
+           $_SESSION["role"]=$myuser["role"];
+           if ($myuser["role"]==="teacher") {
+            header("location:.../../../../vue/user/ensiegnants/dashboard.php");
+            exit();
+           }else{
+            header("location:.../../../../vue/user/pages/about.php");
+            exit();
+           }
+        }
     }
 
-    public function logout() {
-
+    public function register($name, $email, $password, $role){
+        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email=?");
+        $stmt->execute([$email]);
+        $myuser = $stmt->fetch();
+        if ($myuser) {
+            throw new Exception("the user is already registreed");
+        }
+        $hashedpassord = password_hash($password, PASSWORD_BCRYPT);
+        $stmt = $this->pdo->prepare("INSERT INTO  users (name, email, password, role, status) VALUES (?,?,?,?,'inactive')");
+        $stmt->execute([$name, $email, $hashedpassord, $role]);
     }
+
 
 }
 

@@ -1,3 +1,14 @@
+<?php
+session_start();
+include('../../model/conn.php');
+include("../../model/class/class.php");
+$newObjLogin=new User ($pdo);
+if (isset($_POST['submit'])) {
+    $email=$_POST["email"];
+    $password=$_POST["password"];
+$newObjLogin->loginFunc($email,$password);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,7 +84,7 @@
       <p>your email <span>*</span></p>
       <input type="email" name="email" placeholder="enter your email" required maxlength="50" class="box">
       <p>your password <span>*</span></p>
-      <input type="password" name="pass" placeholder="enter your password" required maxlength="20" class="box">
+      <input type="password" name="password" placeholder="enter your password" required maxlength="20" class="box">
       <input type="submit" value="login" name="submit" class="btn">
    </form>
 </section>

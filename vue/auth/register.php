@@ -1,3 +1,19 @@
+<?php 
+include('../../model/conn.php');
+include("../../model/class/class.php");
+$newRegesterOb=new User($pdo);
+if (isset($_POST["submit"])) {
+    $name=$_POST["name"];
+    $email=$_POST["email"];
+    $password=$_POST["password"];
+    $role=$_POST["role"];
+try {
+    $newRegesterOb->register($name,$email,$password,$role);
+} catch (Exception $th) {
+  echo $th->getMessage();
+}
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,11 +21,7 @@
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>register</title>
-
-   <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
-
-   <!-- custom css file link  -->
    <link rel="stylesheet" href="../../public/css/style.css">
 
 </head>
@@ -75,11 +87,11 @@
       <p>your email <span>*</span></p>
       <input type="email" name="email" placeholder="enter your email" required maxlength="50" class="box">
       <p>your password <span>*</span></p>
-      <input type="password" name="pass" placeholder="enter your password" required maxlength="20" class="box">
+      <input type="password" name="password" placeholder="enter your password" required maxlength="20" class="box">
       <p>role<span>*</span></p>
       <select name="role" id="role" required maxlength="50" class="box">
-        <option value="Enseignant">teacher</option>
-        <option value="Étudiant">Étudiant</option>
+        <option value="teacher">teacher</option>
+        <option value="student">student</option>
       </select>
       <input type="submit" value="register new" name="submit" class="btn">
    </form>

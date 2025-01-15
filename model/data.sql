@@ -4,21 +4,21 @@ CREATE TABLE Users (
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     role ENUM('student', 'teacher') NOT NULL,
-    status ENUM('activer', 'inactive', 'banned') NOT NULL DEFAULT 'activer',
+    status ENUM('activer', 'inactive', 'banned') NOT NULL DEFAULT 'inactive',
     dataCourse DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE Students (
+CREATE TABLE Student(
     id INT PRIMARY KEY,
     FOREIGN KEY (id) REFERENCES Users(id) ON DELETE CASCADE
 );
 
-CREATE TABLE Teachers (
+CREATE TABLE Teacher(
     id INT PRIMARY KEY,
     FOREIGN KEY (id) REFERENCES Users(id) ON DELETE CASCADE
 );
 
-CREATE TABLE Admins (
+CREATE TABLE Admin(
     id INT PRIMARY KEY,
     FOREIGN KEY (id) REFERENCES Users(id) ON DELETE CASCADE
 );
