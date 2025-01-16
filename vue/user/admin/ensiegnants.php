@@ -198,7 +198,7 @@ tbody tr:hover {
    <nav class="navbar">
     <a href="dashboard.php"><i class="fa-solid fa-chart-pie"></i><span>statistiques globales</span></a>
     <a href="ensiegnants.php"><i class="fa-solid fa-check"></i><span>validation ensiegnants </span></a>
-    <a href="content.php"><i class="fa-solid fa-bars"></i><span>gestion content</span></a>
+    <a href="tags.php"><i class="fa-solid fa-bars"></i><span>gestion content</span></a>
     <a href="../pages/about.php" onclick="return confirm('logout from this website?');"><i class="fas fa-right-from-bracket"></i><span>logout</span></a>
    </nav>
 </div>

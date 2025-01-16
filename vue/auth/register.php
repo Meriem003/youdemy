@@ -1,5 +1,5 @@
 <?php 
-include('../../model/conn.php');
+include('../../model/config/conn.php');
 include("../../model/class/class.php");
 $newRegesterOb=new User($pdo);
 if (isset($_POST["submit"])) {

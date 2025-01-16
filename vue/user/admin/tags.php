@@ -1,3 +1,7 @@
+<?php
+   require '../../../model/config/conn.php';
+   require '../../../model/class/class.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +51,7 @@
       <a href="../pages/about.php" class="btn">logout</a>
    </div>
    <nav class="navbar">
-      <a href="dashboard.php"><i class="fa-solid fa-user"></i><span>home</span></a>
+      <a href="./dashboard.php"><i class="fa-solid fa-house"></i><span>home</span></a>
       <a href="tags.php"><i class="fa-solid fa-check"></i><span>gestion tags</span></a>
       <a href="catégorie.php"><i class="fa-solid fa-chart-pie"></i><span>gestion catégorie</span></a>
       <a href="../pages/about.php" onclick="return confirm('logout from this website?');"><i class="fas fa-right-from-bracket"></i><span>logout</span></a>
@@ -55,9 +59,43 @@
 
 </div>
 
-</div>
+<section class="form-container">
+   <form action="" method="post" enctype="multipart/form-data">
+      <h3>add tags</h3>
+      <p> name <span>*</span></p>
+      <input type="text" name="name" placeholder="enter your name" required maxlength="50" class="box">
+      <input type="submit" value="add" name="submit" class="btn">
+   </form>
+</section>
+<table>
+   <thead>
+<tr>
+   <th>nome</th>
+   <th>modifier</th>
+   <th>delete</th>
+</tr>
+   </thead>
+   <tbody>
+      <?php
+      $tags = new Tag($pdo,null);
+      $tag = $tags->viewTAG();
+      foreach($tag as $row) {
+         echo "<tr>";
+         echo "<td>{$row['name']}</td>";
+         echo "<td><a href='./tags.php.?id={$row['id']}'><i class='fa-solid fa-file-pen'></i></a></td>";
+         echo "<td><a href='./tags.php?id={$row['id']}'><i class='fa-solid fa-trash'></i></a></td>";
+         echo "</tr>";
+      }
+      ?>
+   </tbody>
+</table>
+<?php
+      if (isset($_POST["submit"])) {
+         $name =htmlspecialchars(($_POST["name"]));
+         $tags =new Tag($pdo, $name);
+         $tags->addtag();
+      }
+      ?>
 <script src="../../../public/js/admin.js"></script>
-
-   
 </body>
 </html>

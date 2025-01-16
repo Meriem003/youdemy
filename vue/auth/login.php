@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('../../model/conn.php');
+include('../../model/config/conn.php');
 include("../../model/class/class.php");
 $newObjLogin=new User ($pdo);
 if (isset($_POST['submit'])) {

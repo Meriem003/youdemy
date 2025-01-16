@@ -1,3 +1,7 @@
+<?php
+require '../../../model/config/conn.php';
+require '../../../model/class/class.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +15,19 @@
 
    <!-- custom css file link  -->
    <link rel="stylesheet" href="../../../public/css/style.css">
+ <style>
+   :root{
+   --main-color:#8e44ad;
+   --red:#e74c3c;
+   --orange:#f39c12;
+   --light-color:#888;
+   --light-bg:#eee;
+   --black:#2c3e50;
+   --white:#fff;
+   --border:.1rem solid rgba(0,0,0,.2);
+}
 
+ </style>
 </head>
 <body>
 <header class="header">
@@ -47,15 +63,53 @@
       <a href="../pages/about.php" class="btn">logout</a>
    </div>
    <nav class="navbar">
-      <a href="dashboard.php"><i class="fa-solid fa-user"></i><span>home</span></a>
+      <a href="./dashboard.php"><i class="fa-solid fa-house"></i><span>home</span></a>
       <a href="tags.php"><i class="fa-solid fa-check"></i><span>gestion tags</span></a>
       <a href="catégorie.php"><i class="fa-solid fa-chart-pie"></i><span>gestion catégorie</span></a>
       <a href="../pages/about.php" onclick="return confirm('logout from this website?');"><i class="fas fa-right-from-bracket"></i><span>logout</span></a>
    </nav>
 
 </div>
-
-</div>
+<section class="form-container">
+   <form action="" method="post" enctype="multipart/form-data">
+      <h3>add catégorie</h3>
+      <p> name <span>*</span></p>
+      <input type="text" name="name" placeholder="enter your name" required maxlength="50" class="box">
+      <input type="submit" value="add" name="submit" class="btn">
+   </form>
+<?php
+if (isset($_POST["submit"])) {
+   $name = htmlspecialchars($_POST["name"]);
+   $catégorie = new Category($pdo,$name);
+   $catégorie->addCategory();
+}
+?>
+<div class="table-responsive">
+   <table>
+      <thead>
+         <tr>
+            <th>name</th>
+            <th>modifier</th>
+            <th>supprimer</th>
+         </tr>
+      </thead>
+      <tbody>
+         <?php
+         $Category = new Category($pdo,null);
+         $Categories = $Category->viewCATE();
+         foreach($Categories as $row) {
+            echo "<tr>";
+            echo "<td>{$row['name']}</td>";
+            echo "<td><a href='./catégorie.php.?id={$row['id']}'><i class='fa-solid fa-file-pen'></i></a></td>";
+            echo "<td><a href='./catégorie.php?id={$row['id']}'><i class='fa-solid fa-trash'></i></a></td>";
+            echo "</tr>";
+         }
+         
+         ?>
+      </tbody>
+   </table>
+   </div>
+   </section>
 <script src="../../../public/js/admin.js"></script>
 </body>
 </html>

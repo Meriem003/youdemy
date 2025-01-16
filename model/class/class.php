@@ -117,12 +117,10 @@ class Teacher extends User {
 
 class Admin extends User {
     private $pdo;
-
     public function __construct($pdo) {
         parent::__construct($pdo);
         $this->pdo = $pdo; 
     }
-
     public function validateTeacher ($teacher, $status) {
         $sql = "UPDATE users SET status = :status WHERE id = :teacher";
         $stmt = $this->pdo->prepare($sql);
@@ -130,7 +128,6 @@ class Admin extends User {
         $stmt->bindParam(':teacher', $teacher);
         return $stmt->execute();
     }
-    
     public function manageUsers() {
         $sql = "SELECT * FROM users where role= 'teacher'";
         $stmt = $this->pdo->prepare($sql);
@@ -141,11 +138,9 @@ class Admin extends User {
         }
         return $users;
     }
-
     public function manageContent() {
 
     }
-
     public function viewGlobalStatistics() {
 
     }
@@ -210,28 +205,36 @@ class Course {
 
 
 class Category {
-    private $id;
     private $name;
-    private $description;
+    private $pdo;
 
-    private $conn;
-
-    public function __construct($pdo) {
-        $this->conn = $pdo;
+    public function __construct($pdo,$name) {
+        $this->pdo = $pdo;
+        $this->name = $name;
     }
 
-    public function setId($id) {
-        $this->id = $id;
+    public function FunctionName()  {
+        return $this->name;
     }
-
     public function setName($name) {
         $this->name = $name;
     }
 
-    public function setDescription($description) {
-        $this->description = $description;
+    public function addCategory(){
+         $sql = "INSERT INTO Categories(name) VALUES(?)";
+         $stmt = $this->pdo->prepare($sql);
+         $stmt->execute([$this->name]);
     }
-
+    public function viewCATE()  {
+        $sql ="SELECT * FROM Categories";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $Cate = [];
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $Cate[]=$row;
+        }
+        return $Cate;
+    }
     public function addCourse($course) {
 
     }
@@ -246,23 +249,36 @@ class Category {
 }
 
 class Tag {
-    private $id;
     private $name;
+    private $pdo;
 
-    private $conn;
-
-    public function __construct($db) {
-        $this->conn = $db;
+    public function __construct($pdo,$name) {
+        $this->pdo = $pdo;
+        $this->name = $name;
     }
-
-    public function setId($id) {
-        $this->id = $id;
+    public function getname(){
+        return $this->name;
     }
-
     public function setName($name) {
         $this->name = $name;
     }
 
+    public function addtag()  {
+        $sql = "INSERT INTO Tags (name) Value(?)";
+        $stmt= $this->pdo->prepare($sql);
+        $stmt->execute([$this->name]);
+    }
+
+    public function viewTAG(){
+        $sql = "SELECT * FROM tags";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt ->execute();
+        $tag=[];
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $tag[]=$row;
+        }
+        return $tag;
+    }
     public function addToCourse($course) {
 
     }
