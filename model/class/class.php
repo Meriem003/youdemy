@@ -123,12 +123,16 @@ class Admin extends User {
         $this->pdo = $pdo; 
     }
 
-    public function validateTeacher($teacher) {
-
+    public function validateTeacher ($teacher, $status) {
+        $sql = "UPDATE users SET status = :status WHERE id = :teacher";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':teacher', $teacher);
+        return $stmt->execute();
     }
-
+    
     public function manageUsers() {
-        $sql = "SELECT * FROM users";
+        $sql = "SELECT * FROM users where role= 'teacher'";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         $users = [];

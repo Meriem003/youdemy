@@ -196,11 +196,10 @@ tbody tr:hover {
       <a href="../pages/about.php" class="btn">logout</a>
    </div>
    <nav class="navbar">
-      <a href="utilisateurs.php"><i class="fa-solid fa-user"></i><span>les utilisateurs</span></a>
-      <a href="ensiegnants.php"><i class="fa-solid fa-check"></i><span>validation ensiegnants </span></a>
-      <a href="dashboard.php"><i class="fa-solid fa-chart-pie"></i><span>statistiques globales</span></a>
-      <a href="content.php"><i class="fa-solid fa-bars"></i><span>gestion content</span></a>
-      <a href="../pages/about.php" onclick="return confirm('logout from this website?');"><i class="fas fa-right-from-bracket"></i><span>logout</span></a>
+    <a href="dashboard.php"><i class="fa-solid fa-chart-pie"></i><span>statistiques globales</span></a>
+    <a href="ensiegnants.php"><i class="fa-solid fa-check"></i><span>validation ensiegnants </span></a>
+    <a href="content.php"><i class="fa-solid fa-bars"></i><span>gestion content</span></a>
+    <a href="../pages/about.php" onclick="return confirm('logout from this website?');"><i class="fas fa-right-from-bracket"></i><span>logout</span></a>
    </nav>
 </div>
 <div class="table-responsive">
@@ -210,13 +209,54 @@ tbody tr:hover {
             <th>name</th>
             <th>email</th>
             <th>dataCourse</th>
+            <th>status</th>
             <th>active</th>
             <th>inactive</th>
             <th>baned</th>
-
          </tr>
       </thead>
       <tbody>
+      <tbody>
+        <?php
+        include '../../../model/config/conn.php';
+        include '../../../model/class/class.php';
+
+        $admin = new Admin($pdo);
+        if (isset($_GET['action']) && isset($_GET['teacher_id'])) {
+            $action = $_GET['action'];
+            $teacher =$_GET['teacher_id'];
+                if ($teacher > 0) {
+                switch ($action) {
+                    case 'activate':
+                        $admin->validateTeacher ($teacher, 'active');
+                        break;
+                    case 'deactivate':
+                        $admin->validateTeacher ($teacher, 'inactive');
+                        break;
+                    case 'ban':
+                        $admin->validateTeacher ($teacher, 'banned');
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        $users = $admin->manageUsers();
+        foreach ($users as $row) {
+            echo "<tr>";
+            echo "<td>" . htmlspecialchars($row['name']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['email']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['dataCourse']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['status']) . "</td>";
+            echo "<td><a href='./ensiegnants.php?action=activate&teacher_id=" . $row['id'] . "' class='active'><i class='fa-solid fa-check'></i></a></td>";
+            echo "<td><a href='./ensiegnants.php?action=deactivate&teacher_id=" . $row['id'] . "' class='inactive'><i class='fa-regular fa-circle-xmark'></i></a></td>";
+            echo "<td><a href='./ensiegnants.php?action=ban&teacher_id=" . $row['id'] . "' class='baned'><i class='fa-solid fa-user-xmark'></i></a></td>";
+            echo "</tr>";
+        }
+        ?>
+</tbody>
+
       </tbody>
    </table>
    <div class="pagination">

@@ -6,10 +6,8 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>contact us</title>
 
-   <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
 
-   <!-- custom css file link  -->
    <link rel="stylesheet" href="../../../public/css/style.css">
 
 </head>
@@ -47,9 +45,8 @@
       <a href="../pages/about.php" class="btn">logout</a>
    </div>
    <nav class="navbar">
-      <a href="utilisateurs.php"><i class="fa-solid fa-user"></i><span>les utilisateurs</span></a>
+   <a href="dashboard.php"><i class="fa-solid fa-chart-pie"></i><span>statistiques globales</span></a>
       <a href="ensiegnants.php"><i class="fa-solid fa-check"></i><span>validation ensiegnants </span></a>
-      <a href="dashboard.php"><i class="fa-solid fa-chart-pie"></i><span>statistiques globales</span></a>
       <a href="content.php"><i class="fa-solid fa-bars"></i><span>gestion content</span></a>
       <a href="../pages/about.php" onclick="return confirm('logout from this website?');"><i class="fas fa-right-from-bracket"></i><span>logout</span></a>
    </nav>
