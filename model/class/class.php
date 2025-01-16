@@ -6,35 +6,56 @@ class User {
     protected $password;
     protected $role;
     protected $status;
-    protected $createdAt;
+    protected $createdAT ;
     private $pdo;
 
-    public function __construct($pdo) {
+    public function __construct($pdo, $name, $email, $password, $role, $status, $createdAT ) {
         $this->pdo = $pdo;
+        $this->name = $name;
+        $this->email = $email;
+        $this->password = $password;
+        $this->role = $role;
+        $this->status = $status;
+        $this->createdAT  = $createdAT ;
     }
+    
 
+    public function getname()  {
+        return $this->name;
+    }
     public function setName($name) {
         $this->name = $name;
     }
-
+    public function getemail()  {
+        return $this->email;
+    }
     public function setEmail($email) {
         $this->email = $email;
     }
-
+    public function getpassword()  {
+        return $this->password;
+    }
     public function setPassword($password) {
         $this->password = $password;
     }
-
+    public function getrole()  {
+        return $this->role;
+    }
     public function setRole($role) {
         $this->role = $role;
     }
-
+    public function getStatus() {
+        return $this->status;
+    }
+    
     public function setStatus($status) {
         $this->status = $status;
     }
-
-    public function setCreatedAt($createdAt) {
-        $this->createdAt = $createdAt;
+    public function getcreatedAT ()  {
+        return $this->createdAT  ;
+    }
+    public function setcreatedAT ($createdAT ) {
+        $this->createdAT  = $createdAT ;
     }
 
     public function loginFunc($email,$password){
@@ -73,8 +94,8 @@ class User {
 class Student extends User {
     private $coursesList;
 
-    public function __construct($pdo) {
-        parent::__construct($pdo);
+    public function __construct($pdo,$name,$email,$password,$role,$status,$createdAT ) {
+        parent::__construct($pdo,$name,$email,$password,$role,$status,$createdAT );
     }
 
     public function addCourse($course) {
@@ -94,8 +115,8 @@ class Student extends User {
 class Teacher extends User {
     private $createdCourses;
 
-    public function __construct($pdo) {
-        parent::__construct($pdo);
+    public function __construct($pdo,$name,$email,$password,$role,$status,$createdAT ) {
+        parent::__construct($pdo,$name,$email,$password,$role,$status,$createdAT );
     }
 
     public function createCourse($course) {
@@ -117,19 +138,21 @@ class Teacher extends User {
 
 class Admin extends User {
     private $pdo;
-    public function __construct($pdo) {
-        parent::__construct($pdo);
-        $this->pdo = $pdo; 
+
+     public function __construct($pdo,$name,$email,$password,$role,$status,$createdAT ) {
+        parent::__construct($pdo,$name,$email,$password,$role,$status,$createdAT );
+        $this->pdo = $pdo;
     }
-    public function validateTeacher ($teacher, $status) {
-        $sql = "UPDATE users SET status = :status WHERE id = :teacher";
+    public function validateUsers ($users, $status) {
+        $sql = "UPDATE users SET status = :status WHERE id = :users";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':status', $status);
-        $stmt->bindParam(':teacher', $teacher);
+        $stmt->bindParam(':users', $users);
         return $stmt->execute();
     }
+
     public function manageUsers() {
-        $sql = "SELECT * FROM users where role= 'teacher'";
+        $sql = "SELECT * FROM users ";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         $users = [];

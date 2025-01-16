@@ -16,16 +16,150 @@ require '../../../model/class/class.php';
    <!-- custom css file link  -->
    <link rel="stylesheet" href="../../../public/css/style.css">
  <style>
-   :root{
-   --main-color:#8e44ad;
-   --red:#e74c3c;
-   --orange:#f39c12;
-   --light-color:#888;
-   --light-bg:#eee;
-   --black:#2c3e50;
-   --white:#fff;
-   --border:.1rem solid rgba(0,0,0,.2);
+:root {
+    --main-color: #8e44ad;
+    --red: #e74c3c;
+    --orange: #f39c12;
+    --light-color: #888;
+    --light-bg: #f9f9f9;
+    --black: #2c3e50;
+    --white: #fff;
+    --border: .1rem solid rgba(0, 0, 0, .2);
 }
+
+
+.form-style {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 600px;
+    border: var(--border);
+    border-radius: 8px;
+    background-color: var(--white);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-style h3 {
+    margin-bottom: 15px;
+    color: var(--main-color);
+    font-size: 24px;
+    text-align: center;
+}
+
+.form-style p {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: var(--black);
+}
+
+.form-style p span {
+    color: var(--red);
+}
+
+.form-style .box {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: var(--border);
+    border-radius: 4px;
+    font-size: 16px;
+    color: var(--black);
+}
+
+.form-style .btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    color: var(--white);
+    background-color: var(--main-color);
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.form-style .btn:hover {
+    background-color: var(--orange);
+}
+
+.table-responsive {
+    margin: 20px auto; 
+    width: 60%; 
+    max-width: 1200px; 
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    background-color: var(--light-bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 12px 18px;
+    text-align: center; 
+    vertical-align: middle; 
+    border: var(--border);
+    font-weight: 500;
+}
+
+thead tr {
+    background: linear-gradient(135deg, var(--main-color), var(--orange));
+    color: var(--white);
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color:rgba(221, 204, 204, 0.79);
+    color: #2c3e50; 
+    cursor: pointer;
+}
+
+
+.edit, .delete-btn {
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    display: inline-flex; 
+    justify-content: center;
+    align-items: center;
+}
+
+.edit {
+    color: #2ecc71;
+    background-color: #e0f7e9;
+}
+
+.delete-btn {
+    color: #e74c3c;
+    background-color: #fce4e4;
+}
+
+
+.edit:hover {
+    background-color: #27ae60;
+    color: var(--white);
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+    color: var(--white);
+}
+
+.delete-btn i, .edit i{
+    transition: transform 0.2s ease-in-out;
+    font-size: 18px;
+}
+
+.edit:hover i, .delete-btn:hover i{
+    transform: scale(1.2);
+}
+
 
  </style>
 </head>
@@ -70,46 +204,36 @@ require '../../../model/class/class.php';
    </nav>
 
 </div>
-<section class="form-container">
-   <form action="" method="post" enctype="multipart/form-data">
-      <h3>add catégorie</h3>
-      <p> name <span>*</span></p>
-      <input type="text" name="name" placeholder="enter your name" required maxlength="50" class="box">
-      <input type="submit" value="add" name="submit" class="btn">
-   </form>
-<?php
-if (isset($_POST["submit"])) {
-   $name = htmlspecialchars($_POST["name"]);
-   $catégorie = new Category($pdo,$name);
-   $catégorie->addCategory();
-}
-?>
-<div class="table-responsive">
-   <table>
-      <thead>
-         <tr>
-            <th>name</th>
-            <th>modifier</th>
-            <th>supprimer</th>
-         </tr>
-      </thead>
-      <tbody>
-         <?php
-         $Category = new Category($pdo,null);
-         $Categories = $Category->viewCATE();
-         foreach($Categories as $row) {
-            echo "<tr>";
-            echo "<td>{$row['name']}</td>";
-            echo "<td><a href='./catégorie.php.?id={$row['id']}'><i class='fa-solid fa-file-pen'></i></a></td>";
-            echo "<td><a href='./catégorie.php?id={$row['id']}'><i class='fa-solid fa-trash'></i></a></td>";
-            echo "</tr>";
-         }
-         
-         ?>
-      </tbody>
-   </table>
-   </div>
-   </section>
+    <form action="" method="post" enctype="multipart/form-data" class="form-style">
+        <h3>Ajouter une catégorie</h3>
+        <p>Nom <span>*</span></p>
+        <input type="text" name="name" placeholder="Entrez le nom" required maxlength="50" class="box">
+        <input type="submit" value="Ajouter" name="submit" class="btn">
+    </form>
+    <div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Modifier</th>
+                <th>Supprimer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $Category = new Category($pdo, null);
+            $Categories = $Category->viewCATE();
+            foreach ($Categories as $row) {
+                echo "<tr>";
+                echo "<td>{$row['name']}</td>";
+                echo "<td><a href='./catégorie.php.?id={$row['id']}' class='edit'><i class='fa-solid fa-file-pen'></i></a></td>";
+                echo "<td><a href='./catégorie.php?id={$row['id']}' class='delete-btn'><i class='fa-solid fa-trash'></i></a></td>";
+                echo "</tr>";
+            }
+            ?>
+        </tbody>
+    </table>
+    </div>
 <script src="../../../public/js/admin.js"></script>
 </body>
 </html>

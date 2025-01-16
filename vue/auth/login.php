@@ -2,7 +2,7 @@
 session_start();
 include('../../model/config/conn.php');
 include("../../model/class/class.php");
-$newObjLogin=new User ($pdo);
+$newObjLogin=new User ($pdo,null,null,null,null,null,null );;
 if (isset($_POST['submit'])) {
     $email=$_POST["email"];
     $password=$_POST["password"];

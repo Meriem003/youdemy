@@ -1,7 +1,7 @@
 <?php 
 include('../../model/config/conn.php');
 include("../../model/class/class.php");
-$newRegesterOb=new User($pdo);
+$newRegesterOb=new User($pdo,null,null,null,null,null,null );;
 if (isset($_POST["submit"])) {
     $name=$_POST["name"];
     $email=$_POST["email"];

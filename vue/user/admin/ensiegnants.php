@@ -208,7 +208,7 @@ tbody tr:hover {
          <tr>
             <th>name</th>
             <th>email</th>
-            <th>dataCourse</th>
+            <th>role</th>
             <th>status</th>
             <th>active</th>
             <th>inactive</th>
@@ -216,25 +216,24 @@ tbody tr:hover {
          </tr>
       </thead>
       <tbody>
-      <tbody>
         <?php
         include '../../../model/config/conn.php';
         include '../../../model/class/class.php';
 
-        $admin = new Admin($pdo);
-        if (isset($_GET['action']) && isset($_GET['teacher_id'])) {
+        $admin = new Admin($pdo,null,null,null,null,null,null );
+        if (isset($_GET['action']) && isset($_GET['users_id'])) {
             $action = $_GET['action'];
-            $teacher =$_GET['teacher_id'];
-                if ($teacher > 0) {
+            $users =$_GET['users_id'];
+                if ($users > 0) {
                 switch ($action) {
                     case 'activate':
-                        $admin->validateTeacher ($teacher, 'active');
+                        $admin->validateUsers ($users, 'active');
                         break;
                     case 'deactivate':
-                        $admin->validateTeacher ($teacher, 'inactive');
+                        $admin->validateUsers ($users, 'inactive');
                         break;
                     case 'ban':
-                        $admin->validateTeacher ($teacher, 'banned');
+                        $admin->validateUsers ($users, 'banned');
                         break;
                     default:
                         break;
@@ -247,26 +246,23 @@ tbody tr:hover {
             echo "<tr>";
             echo "<td>" . htmlspecialchars($row['name']) . "</td>";
             echo "<td>" . htmlspecialchars($row['email']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['dataCourse']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['role']) . "</td>";
             echo "<td>" . htmlspecialchars($row['status']) . "</td>";
-            echo "<td><a href='./ensiegnants.php?action=activate&teacher_id=" . $row['id'] . "' class='active'><i class='fa-solid fa-check'></i></a></td>";
-            echo "<td><a href='./ensiegnants.php?action=deactivate&teacher_id=" . $row['id'] . "' class='inactive'><i class='fa-regular fa-circle-xmark'></i></a></td>";
-            echo "<td><a href='./ensiegnants.php?action=ban&teacher_id=" . $row['id'] . "' class='baned'><i class='fa-solid fa-user-xmark'></i></a></td>";
+            echo "<td><a href='./ensiegnants.php?action=activate&users_id=" . $row['id'] . "' class='active'><i class='fa-solid fa-check'></i></a></td>";
+            echo "<td><a href='./ensiegnants.php?action=deactivate&users_id=" . $row['id'] . "' class='inactive'><i class='fa-regular fa-circle-xmark'></i></a></td>";
+            echo "<td><a href='./ensiegnants.php?action=ban&users_id=" . $row['id'] . "' class='baned'><i class='fa-solid fa-user-xmark'></i></a></td>";
             echo "</tr>";
         }
         ?>
-</tbody>
-
-      </tbody>
-   </table>
-   <div class="pagination">
-    <a href="#" class="prev">Prev</a>
-    <a href="#" class="page-number">1</a>
-    <a href="#" class="page-number">2</a>
-    <a href="#" class="page-number">3</a>
-    <a href="#" class="next">Next</a>
-</div>
-
+        </tbody>
+        </table>
+        <div class="pagination">
+            <a href="#" class="prev">Prev</a>
+            <a href="#" class="page-number">1</a>
+            <a href="#" class="page-number">2</a>
+            <a href="#" class="page-number">3</a>
+            <a href="#" class="next">Next</a>
+        </div>
 </div>
 
 
