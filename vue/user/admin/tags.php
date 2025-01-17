@@ -133,6 +133,7 @@ tbody tr:hover {
 .edit {
     color: #2ecc71;
     background-color: #e0f7e9;
+    width: 100%;
 }
 
 .delete-btn {
@@ -232,9 +233,15 @@ tbody tr:hover {
                echo "<tr>";
                echo "<td>{$row['name']}</td>";
                echo "<td><a href='./tags.php.?id={$row['id']}' class='edit'><i class='fa-solid fa-file-pen'></i></a></td>";
-               echo "<td><a href='./tags.php?id={$row['id']}' class='delete-btn'><i class='fa-solid fa-trash'></i></a></td>";
+               echo "<td><a href='./tags.php?delete_id={$row['id']}' class='delete-btn'><i class='fa-solid fa-trash'></i></a></td>";
                echo "</tr>";
             }
+
+            if (isset($_GET['delete_id'])) {
+                $tagIdDelete = $_GET['delete_id'];
+                $tags = new tag ($pdo, null); 
+                $tags-> deleteTag($tagIdDelete);
+             }
       ?>
         </tbody>
     </table>

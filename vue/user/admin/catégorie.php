@@ -133,6 +133,7 @@ tbody tr:hover {
 .edit {
     color: #2ecc71;
     background-color: #e0f7e9;
+    width: 100%;
 }
 
 .delete-btn {
@@ -151,7 +152,7 @@ tbody tr:hover {
     color: var(--white);
 }
 
-.delete-btn i, .edit i{
+.delete-btn, .edit i{
     transition: transform 0.2s ease-in-out;
     font-size: 18px;
 }
@@ -220,17 +221,31 @@ tbody tr:hover {
             </tr>
         </thead>
         <tbody>
-            <?php
-            $Category = new Category($pdo, null);
-            $Categories = $Category->viewCATE();
-            foreach ($Categories as $row) {
-                echo "<tr>";
-                echo "<td>{$row['name']}</td>";
-                echo "<td><a href='./catégorie.php.?id={$row['id']}' class='edit'><i class='fa-solid fa-file-pen'></i></a></td>";
-                echo "<td><a href='./catégorie.php?id={$row['id']}' class='delete-btn'><i class='fa-solid fa-trash'></i></a></td>";
-                echo "</tr>";
-            }
-            ?>
+        <?php
+         if (isset($_POST["submit"])) {
+            $name = htmlspecialchars($_POST["name"]);
+            $Category = new Category($pdo, $name);
+            $Category->addCategory();
+         }
+
+         $Category = new Category($pdo, null);
+         $Categories = $Category->viewCATE();
+
+         foreach ($Categories as $row) {
+            echo "<tr>";
+            echo "<td>{$row['name']}</td>";
+            echo "<td><a href='./catégorie.php?id={$row['id']}' class='edit'><i class='fa-solid fa-file-pen'></i></a></td>";
+            echo "<td><a href='./catégorie.php?delete_id={$row['id']}' class='delete-btn'><i class='fa-solid fa-trash'></i></a></td>";
+            echo "</tr>";
+         }
+
+         if (isset($_GET['delete_id'])) {
+            $categoryIdDelete = $_GET['delete_id'];
+            $Category = new Category($pdo, null); 
+            $Category->deleteCate($categoryIdDelete);
+         }
+         ?>
+
         </tbody>
     </table>
     </div>

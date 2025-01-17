@@ -228,6 +228,7 @@ class Course {
 
 
 class Category {
+    private $id;
     private $name;
     private $pdo;
 
@@ -236,13 +237,18 @@ class Category {
         $this->name = $name;
     }
 
-    public function FunctionName()  {
+    public function getname()  {
         return $this->name;
     }
     public function setName($name) {
         $this->name = $name;
     }
-
+    public function getid()  {
+        return $this->id;
+    }
+    public function setid($id){
+        $this->id=$id;
+    }
     public function addCategory(){
          $sql = "INSERT INTO Categories(name) VALUES(?)";
          $stmt = $this->pdo->prepare($sql);
@@ -257,6 +263,11 @@ class Category {
             $Cate[]=$row;
         }
         return $Cate;
+    }
+    public function deleteCate($id) {
+        $sql = "DELETE FROM Categories WHERE id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$id]);
     }
     public function addCourse($course) {
 
@@ -301,6 +312,12 @@ class Tag {
             $tag[]=$row;
         }
         return $tag;
+    }
+
+    public function deleteTag($id){
+        $sql = "DELETE FROM tags WHERE id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$id]);
     }
     public function addToCourse($course) {
 
