@@ -3,10 +3,27 @@ CREATE TABLE Users (
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role ENUM('student', 'teacher') NOT NULL,
-    status ENUM('activer', 'inactive', 'banned') NOT NULL DEFAULT 'inactive',
+    role ENUM('student', 'teacher','admin') NOT NULL,
+    status ENUM('activer', 'inactive', 'banned') NOT NULL DEFAULT 'activer',
     dataCourse DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+DELIMITER //
+
+CREATE TRIGGER before_user_insert
+BEFORE INSERT ON Users
+FOR EACH ROW
+BEGIN
+    IF NEW.role = 'student' AND NEW.status != 'activer' THEN
+        SET NEW.status = 'activer';
+    END IF;
+
+    IF NEW.role = 'teacher' AND NEW.status != 'inactive' THEN
+        SET NEW.status = 'inactive';
+    END IF;
+END //
+
+DELIMITER ;
 
 CREATE TABLE Student(
     id INT PRIMARY KEY,

@@ -1,13 +1,6 @@
 <?php
 include '../../../model/config/conn.php';
 include '../../../model/class/class.php';
-// session_start();
-// if (!isset($_SESSION[""])||$_SESSION[""]!=="") {
-// header("location:");
-// exit();
-// }else{
-//     echo 'you hae the acces';
-// }
 ?>
 <!DOCTYPE html>
 <html lang="en">

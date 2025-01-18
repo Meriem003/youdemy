@@ -23,17 +23,23 @@ class User {
         $stmt = $this->pdo->prepare("SELECT * FROM  users WHERE email=?");
         $stmt->execute([$email]);
         $myuser = $stmt->fetch();
-        if($myuser && password_verify($password,$myuser["password"])){
-           $_SESSION["name"]=$myuser["name"];
-           $_SESSION["email"]=$myuser["email"];
-           $_SESSION["role"]=$myuser["role"];
-           if ($myuser["role"]==="teacher") {
-            header("location:.../../../../vue/user/ensiegnants/dashboard.php");
-            exit();
-           }else{
-            header("location:.../../../../vue/user/pages/about.php");
-            exit();
-           }
+        if ($myuser && password_verify($password, $myuser["password"])) {
+            $_SESSION["name"] = $myuser["name"];
+            $_SESSION["email"] = $myuser["email"];
+            $_SESSION["role"] = $myuser["role"];
+    
+            if ($myuser["role"] === "admin") {
+                header("Location: .../../../../vue/user/admin/dashboard.php");
+                exit();
+            } elseif ($myuser["role"] === "teacher") {
+                header("Location: .../../../../vue/user/ensiegnants/dashboard.php");
+                exit();
+            } else {
+                header("Location: ../../../vue/user/pages/about.php");
+                exit();
+            }
+        } else {
+            throw new Exception("Invalid email or password");
         }
     }
 
@@ -44,12 +50,10 @@ class User {
         if ($myuser) {
             throw new Exception("the user is already registreed");
         }
-        $hashedpassord = password_hash($password, PASSWORD_BCRYPT);
-        $stmt = $this->pdo->prepare("INSERT INTO  users (name, email, password, role, status) VALUES (?,?,?,?,'inactive')");
-        $stmt->execute([$name, $email, $hashedpassord, $role]);
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+        $stmt = $this->pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$name, $email, $hashedPassword, $role]);
     }
-
-
 }
 
 class Student extends User {
@@ -144,36 +148,6 @@ class Course {
     public function __construct($pdo) {
         $this->conn = $pdo;
     }
-
-
-    public function setId($id) {
-        $this->id = $id;
-    }
-
-    public function setTitle($title) {
-        $this->title = $title;
-    }
-
-    public function setDescription($description) {
-        $this->description = $description;
-    }
-
-    public function setContent($content) {
-        $this->content = $content;
-    }
-
-    public function setCategory($category) {
-        $this->category = $category;
-    }
-
-    public function setTeacher($teacher) {
-        $this->teacher = $teacher;
-    }
-
-    public function setCreatedAt($createdAt) {
-        $this->createdAt = $createdAt;
-    }
-
     public function addContent($content) {
 
     }
@@ -314,27 +288,6 @@ class Subscription {
 
     public function __construct($pdo) {
         $this->conn = $pdo;
-    }
-
-
-    public function setId($id) {
-        $this->id = $id;
-    }
-
-    public function setStudentId($studentId) {
-        $this->studentId = $studentId;
-    }
-
-    public function setCourseId($courseId) {
-        $this->courseId = $courseId;
-    }
-
-    public function setStatus($status) {
-        $this->status = $status;
-    }
-
-    public function setEnrollmentDate($enrollmentDate) {
-        $this->enrollmentDate = $enrollmentDate;
     }
 }
 
