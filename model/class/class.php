@@ -19,45 +19,6 @@ class User {
         $this->createdAT  = $createdAT ;
     }
     
-
-    public function getname()  {
-        return $this->name;
-    }
-    public function setName($name) {
-        $this->name = $name;
-    }
-    public function getemail()  {
-        return $this->email;
-    }
-    public function setEmail($email) {
-        $this->email = $email;
-    }
-    public function getpassword()  {
-        return $this->password;
-    }
-    public function setPassword($password) {
-        $this->password = $password;
-    }
-    public function getrole()  {
-        return $this->role;
-    }
-    public function setRole($role) {
-        $this->role = $role;
-    }
-    public function getStatus() {
-        return $this->status;
-    }
-    
-    public function setStatus($status) {
-        $this->status = $status;
-    }
-    public function getcreatedAT ()  {
-        return $this->createdAT  ;
-    }
-    public function setcreatedAT ($createdAT ) {
-        $this->createdAT  = $createdAT ;
-    }
-
     public function loginFunc($email,$password){
         $stmt = $this->pdo->prepare("SELECT * FROM  users WHERE email=?");
         $stmt->execute([$email]);
@@ -232,22 +193,10 @@ class Category {
     private $name;
     private $pdo;
 
-    public function __construct($pdo,$name) {
+    public function __construct($pdo,$name,$id) {
         $this->pdo = $pdo;
         $this->name = $name;
-    }
-
-    public function getname()  {
-        return $this->name;
-    }
-    public function setName($name) {
-        $this->name = $name;
-    }
-    public function getid()  {
-        return $this->id;
-    }
-    public function setid($id){
-        $this->id=$id;
+        $this->id= $id;
     }
     public function addCategory(){
          $sql = "INSERT INTO Categories(name) VALUES(?)";
@@ -269,6 +218,21 @@ class Category {
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$id]);
     }
+
+    public function editCate() {
+        $sql = "UPDATE Categories SET name = ? WHERE id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$this->name, $this->id]); 
+    }
+    
+    
+    public function getCategoryById() {
+        $sql = "SELECT * FROM Categories WHERE id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$this->id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
     public function addCourse($course) {
 
     }
@@ -283,20 +247,15 @@ class Category {
 }
 
 class Tag {
+    private $id;
     private $name;
     private $pdo;
 
-    public function __construct($pdo,$name) {
+    public function __construct($pdo,$name,$id) {
         $this->pdo = $pdo;
         $this->name = $name;
+        $this->id = $id;
     }
-    public function getname(){
-        return $this->name;
-    }
-    public function setName($name) {
-        $this->name = $name;
-    }
-
     public function addtag()  {
         $sql = "INSERT INTO Tags (name) Value(?)";
         $stmt= $this->pdo->prepare($sql);
@@ -319,6 +278,21 @@ class Tag {
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$id]);
     }
+
+    public function edittag() {
+        $sql = "UPDATE tags SET name = ? WHERE id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$this->name, $this->id]); 
+    }
+    
+    
+    public function getTagById() {
+        $sql = "SELECT * FROM tags WHERE id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$this->id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
     public function addToCourse($course) {
 
     }

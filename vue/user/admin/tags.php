@@ -1,6 +1,34 @@
 <?php
 require '../../../model/config/conn.php';
 require '../../../model/class/class.php';
+if (isset($_POST["add"])) {
+    $name =htmlspecialchars(($_POST["name"]));
+    $tags =new Tag($pdo, $name,null);
+    $tags->addtag();
+ }
+ if (isset($_GET['delete_id'])) {
+    $tagIdDelete = $_GET['delete_id'];
+    $tags = new Tag ($pdo, null,null); 
+    $tags-> deleteTag($tagIdDelete);
+ }
+ if (isset($_GET["id"])) {
+    $editID = $_GET["id"];
+    $edittag = new Tag($pdo, null, $editID);
+    $edittag = $edittag->getTagById();
+}
+
+if (isset($_POST["edit"])) {
+    $editId = $_POST["editID"];
+    $editName = $_POST["name"];
+    if (!empty($editName)) {
+        $edittag = new Tag($pdo, $editName, $editId);
+        $edittag->edittag(); 
+        header("location: ./tags.php");
+        exit();
+    }
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -208,8 +236,15 @@ tbody tr:hover {
     <form action="" method="post" enctype="multipart/form-data" class="form-style">
         <h3>ADD TAGS</h3>
         <p>Nom <span>*</span></p>
-        <input type="text" name="name" placeholder="Entrez le nom" required maxlength="50" class="box">
-        <input type="submit" value="Ajouter" name="submit" class="btn">
+        <input type="hidden" name="editID" 
+        value="<?php if (isset($edittag['id'])) {echo $edittag['id'];} else {echo '';}?>">
+        <input type="text" name="name" 
+    value="<?php echo isset($edittag['name']) ? $edittag['name'] : ''; ?>" 
+    placeholder="Entrez le nom" required maxlength="50" class="box">
+
+<input type="submit" 
+    value="<?php echo isset($edittag['id']) ? 'Éditer' : 'Ajouter'; ?>" 
+    name="<?php echo isset($edittag['id']) ? 'edit' : 'add'; ?>" class="btn">
     </form>
     <div class="table-responsive">
     <table>
@@ -222,26 +257,15 @@ tbody tr:hover {
         </thead>
         <tbody>
         <?php
-              if (isset($_POST["submit"])) {
-               $name =htmlspecialchars(($_POST["name"]));
-               $tags =new Tag($pdo, $name);
-               $tags->addtag();
-            }
-            $tags = new Tag($pdo,null);
+            $tags = new Tag($pdo,null,null);
             $tag = $tags->viewTAG();
             foreach($tag as $row) {
                echo "<tr>";
                echo "<td>{$row['name']}</td>";
-               echo "<td><a href='./tags.php.?id={$row['id']}' class='edit'><i class='fa-solid fa-file-pen'></i></a></td>";
+               echo "<td><a href='./tags.php?id={$row['id']}' class='edit'><i class='fa-solid fa-file-pen'></i></a></td>";
                echo "<td><a href='./tags.php?delete_id={$row['id']}' class='delete-btn'><i class='fa-solid fa-trash'></i></a></td>";
                echo "</tr>";
             }
-
-            if (isset($_GET['delete_id'])) {
-                $tagIdDelete = $_GET['delete_id'];
-                $tags = new tag ($pdo, null); 
-                $tags-> deleteTag($tagIdDelete);
-             }
       ?>
         </tbody>
     </table>

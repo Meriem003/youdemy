@@ -1,6 +1,31 @@
 <?php
 require '../../../model/config/conn.php';
 require '../../../model/class/class.php';
+
+if (isset($_POST["add"])) {
+   $name = htmlspecialchars($_POST["name"]);
+   $Category = new Category($pdo, $name, null);
+   $Category->addCategory();
+}
+if (isset($_GET["id"])) {
+  $editID = $_GET["id"];
+  $editCat = new Category($pdo, null, $editID);
+  $editCat = $editCat->getCategoryById();
+  
+}
+if (isset($_POST["edit"])) {
+   $editId = $_POST["editID"];
+   $editName = $_POST["name"];
+   $editCat = new Category($pdo, $editName, $editId);
+   $editCat->editCate();
+   header("location: ./catégorie.php");
+   exit();
+}
+if (isset($_GET['delete_id'])) {
+   $tagIdDelete = $_GET['delete_id'];
+   $cate = new Category($pdo, null, null);
+   $cate->deleteCate($tagIdDelete);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,11 +34,7 @@ require '../../../model/class/class.php';
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>contact us</title>
-
-   <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
-
-   <!-- custom css file link  -->
    <link rel="stylesheet" href="../../../public/css/style.css">
  <style>
 :root {
@@ -205,13 +226,19 @@ tbody tr:hover {
    </nav>
 
 </div>
-    <form action="" method="post" enctype="multipart/form-data" class="form-style">
-        <h3>Ajouter une catégorie</h3>
-        <p>Nom <span>*</span></p>
-        <input type="text" name="name" placeholder="Entrez le nom" required maxlength="50" class="box">
-        <input type="submit" value="Ajouter" name="submit" class="btn">
-    </form>
-    <div class="table-responsive">
+<form action="" method="post" enctype="multipart/form-data" class="form-style">
+    <h3>Ajouter une catégorie</h3>
+    <p>Nom <span>*</span></p>
+    <input type="hidden" name="editID" 
+    value="<?php if (isset($editCat['id'])) {echo $editCat['id'];} else {echo '';}?>">
+    <input type="text" name="name" 
+    value="<?php if (isset($editCat['name'])) {echo $editCat['name'];} else {echo '';}?>" 
+    placeholder="Entrez le nom" required maxlength="50" class="box">
+    <input type="submit" 
+    value="<?php if (isset($editCat['id'])) {echo 'Éditer';} else {echo 'Ajouter';}?>" 
+    name="<?php if (isset($editCat['id'])) {echo 'edit';} else {echo 'add';}?>" class="btn">
+</form>
+<div class="table-responsive">
     <table>
         <thead>
             <tr>
@@ -222,33 +249,22 @@ tbody tr:hover {
         </thead>
         <tbody>
         <?php
-         if (isset($_POST["submit"])) {
-            $name = htmlspecialchars($_POST["name"]);
-            $Category = new Category($pdo, $name);
-            $Category->addCategory();
-         }
+            $Category = new Category($pdo, null, null);
+            $Categories = $Category->viewCATE();
 
-         $Category = new Category($pdo, null);
-         $Categories = $Category->viewCATE();
-
-         foreach ($Categories as $row) {
-            echo "<tr>";
-            echo "<td>{$row['name']}</td>";
-            echo "<td><a href='./catégorie.php?id={$row['id']}' class='edit'><i class='fa-solid fa-file-pen'></i></a></td>";
-            echo "<td><a href='./catégorie.php?delete_id={$row['id']}' class='delete-btn'><i class='fa-solid fa-trash'></i></a></td>";
-            echo "</tr>";
-         }
-
-         if (isset($_GET['delete_id'])) {
-            $categoryIdDelete = $_GET['delete_id'];
-            $Category = new Category($pdo, null); 
-            $Category->deleteCate($categoryIdDelete);
-         }
-         ?>
-
+            foreach ($Categories as $row) {
+                echo "<tr>";
+                echo "<td>{$row['name']}</td>";
+                echo "<td><a href='./catégorie.php?id={$row['id']}' class='edit'><i class='fa-solid fa-file-pen'></i></a></td>";
+                echo "<td><a href='./catégorie.php?delete_id={$row['id']}' class='delete-btn'><i class='fa-solid fa-trash'></i></a></td>";
+                echo "</tr>";
+            }
+            ?>
         </tbody>
     </table>
-    </div>
+</div>
+
+
 <script src="../../../public/js/admin.js"></script>
 </body>
 </html>
