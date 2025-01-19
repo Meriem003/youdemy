@@ -49,7 +49,7 @@
       <a href="../pages/about.php" class="btn">logout</a>
    </div>
    <nav class="navbar">
-      <a href="dashboard.php"><i class="fas fa-home"></i><span>home</span></a>
+      <a href="statistiques.php"><i class="fas fa-home"></i><span>home</span></a>
       <a href="mesCours.php"><i class="fa-solid fa-book"></i><span>Mes cours</span></a>
       <a href="gestionCours.php"><i class="fa-solid fa-list"></i><span>gestion cours</span></a>
       <a href="statistiques.php"><i class="fa-solid fa-chart-pie"></i><span>statistiques</span></a>

@@ -105,7 +105,7 @@ class Teacher extends User {
             return "Erreur lors de la création du cours : " . $e->getMessage();
         }
     }
-    public function viewAll () {
+    public function viewAll() {
         $sql = "SELECT * FROM Courses WHERE teacherId = :teacherId";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':teacherId', $this->id);
@@ -116,6 +116,7 @@ class Teacher extends User {
         }
         return $courses;
     }
+    
     public function updateCourse($course) {
     }
     public function deleteCourse($course) {
