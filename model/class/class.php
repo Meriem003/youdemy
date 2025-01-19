@@ -9,7 +9,7 @@ class User {
     protected $createdAT ;
     private $pdo;
 
-    public function __construct($pdo, $name, $email, $password, $role, $status, $createdAT ) {
+    public function __construct($pdo, $id, $name, $email, $password, $role, $status, $createdAT) {
         $this->pdo = $pdo;
         $this->name = $name;
         $this->email = $email;
@@ -17,31 +17,35 @@ class User {
         $this->role = $role;
         $this->status = $status;
         $this->createdAT  = $createdAT ;
+        $this->id = $id;
     }
-    
-    public function loginFunc($email,$password){
-        $stmt = $this->pdo->prepare("SELECT * FROM  users WHERE email=?");
+
+    public function loginFunc($email, $password) {
+        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email=?");
         $stmt->execute([$email]);
         $myuser = $stmt->fetch();
+    
         if ($myuser && password_verify($password, $myuser["password"])) {
+            $_SESSION["id"] = $myuser["id"];     
             $_SESSION["name"] = $myuser["name"];
             $_SESSION["email"] = $myuser["email"];
             $_SESSION["role"] = $myuser["role"];
-    
-            if ($myuser["role"] === "admin") {
+                if ($myuser["role"] === "admin") {
                 header("Location: .../../../../vue/user/admin/dashboard.php");
                 exit();
             } elseif ($myuser["role"] === "teacher") {
                 header("Location: .../../../../vue/user/ensiegnants/dashboard.php");
                 exit();
             } else {
-                header("Location: ../../../vue/user/pages/about.php");
+                header("Location: .../../../vue/user/pages/about.php");
                 exit();
             }
         } else {
             throw new Exception("Invalid email or password");
         }
     }
+    
+    
 
     public function register($name, $email, $password, $role){
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email=?");
@@ -59,8 +63,8 @@ class User {
 class Student extends User {
     private $coursesList;
 
-    public function __construct($pdo,$name,$email,$password,$role,$status,$createdAT ) {
-        parent::__construct($pdo,$name,$email,$password,$role,$status,$createdAT );
+    public function __construct($pdo, $id, $name, $email, $password, $role, $status, $createdAT) {
+        parent::__construct($pdo, $id, $name, $email, $password, $role, $status, $createdAT );
     }
 
     public function addCourse($course) {
@@ -79,19 +83,35 @@ class Student extends User {
 
 class Teacher extends User {
     private $createdCourses;
+    protected $pdo;
+    protected $id;
 
-    public function __construct($pdo,$name,$email,$password,$role,$status,$createdAT ) {
-        parent::__construct($pdo,$name,$email,$password,$role,$status,$createdAT );
+    public function __construct($pdo, $id, $name, $email, $password, $role, $status, $createdAT ) {
+        parent::__construct($pdo, $id, $name, $email, $password, $role, $status, $createdAT );
+        $this->pdo = $pdo;
+        $this->id = $id;
     }
 
-    public function createCourse($course) {
-
+    public function createCourse($title, $description, $content, $categoryId, $tags) {
+        try {
+            $stmt = $this->pdo->prepare("INSERT INTO Courses (title, description, content, categoryId, teacherId) VALUES (?, ?, ?, ?, ?)");
+            $stmt->execute([$title, $description, $content, $categoryId, $this->id]);
+            $courseId = $this->pdo->lastInsertId();
+                if (!empty($tags)) {
+                $stmtTags = $this->pdo->prepare("INSERT INTO CourseTags (courseId, tagId) VALUES (?, ?)");
+                foreach ($tags as $tagId) {
+                    $stmtTags->execute([$courseId, $tagId]);
+                }
+            }
+            return "Le cours a été ajouté avec succès.";
+        } catch (Exception $e) {
+            return "Erreur lors de la création du cours : " . $e->getMessage();
+        }
     }
-
+    
     public function updateCourse($course) {
 
     }
-
     public function deleteCourse($course) {
 
     }
@@ -102,12 +122,20 @@ class Teacher extends User {
 }
 
 class Admin extends User {
-    private $pdo;
-
-     public function __construct($pdo,$name,$email,$password,$role,$status,$createdAT ) {
-        parent::__construct($pdo,$name,$email,$password,$role,$status,$createdAT );
+    protected $pdo;
+    public function __construct($pdo, $id, $name, $email, $password, $role, $status, $createdAT){
+    parent::__construct($pdo, $id ,$name,$email,$password,$role,$status,$createdAT );
         $this->pdo = $pdo;
     }
+    public function setpdo()  {
+        return $this->pdo;
+    }
+
+    public function getpdo($pdo){
+        $this->pdo=$pdo;
+    }
+
+
     public function validateUsers ($users, $status) {
         $sql = "UPDATE users SET status = :status WHERE id = :users";
         $stmt = $this->pdo->prepare($sql);

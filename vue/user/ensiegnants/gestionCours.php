@@ -1,3 +1,13 @@
+<?php
+require '../../../model/config/conn.php';
+require '../../../model/class/class.php';
+session_start();
+if (!isset($_SESSION['id'])) {
+    echo "Erreur : Vous devez être connecté en tant qu'enseignant pour accéder à cette page.";
+    exit;
+}
+// var_dump($_SESSION['id']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,7 +66,56 @@
       <a href="../pages/about.php" onclick="return confirm('logout from this website?');"><i class="fas fa-right-from-bracket"></i><span>logout</span></a>
    </nav>
 </div>
-</div>
+<form action="" method="post" enctype="multipart/form-data">
+    <label for="title">Titre du cours :</label>
+    <input type="text" id="title" name="title" placeholder="Titre du cours" required class="box">
+
+    <label for="description">Description :</label>
+    <textarea id="description" name="description" placeholder="Entrez une description..." required class="box"></textarea>
+
+    <label for="content">Contenu du cours :</label>
+    <textarea id="content" name="content" placeholder="Entrez le contenu du cours..." required class="box"></textarea>
+
+    <label for="category">Catégorie :</label>
+    <select id="category" name="category_id" required class="box">
+        <option value="" disabled selected>-- Sélectionnez une catégorie --</option>
+        <?php
+        $category = new Category($pdo, null, null);
+        foreach ($category->viewCATE() as $cat) {
+            echo '<option value="' . htmlspecialchars($cat['id']) . '">' . htmlspecialchars($cat['name']) . '</option>';
+        }
+        ?>
+    </select>
+
+    <label for="tags">Tags :</label>
+    <div class="tags-container">
+        <?php
+        $tag = new Tag($pdo, null, null);
+        foreach ($tag->viewTAG() as $tagItem) {
+            echo '<label>';
+            echo '<input type="checkbox" name="tags[]" value="' . htmlspecialchars($tagItem['id']) . '"> ' . htmlspecialchars($tagItem['name']);
+            echo '</label><br>';
+        }
+        ?>
+    </div>
+    <input type="submit" value="Ajouter le cours" name="submit_course" class="btn">
+</form>
+<?php
+if (isset($_POST['submit_course'])) {
+   $title = $_POST['title'];
+   $description = $_POST['description'];
+   $content = $_POST['content'];
+   $categoryId = $_POST['category_id'];
+   $tags = isset($_POST['tags']) ? $_POST['tags'] : [];
+
+   $teacher = new Teacher($pdo, $_SESSION['id'], $_SESSION['name'], $_SESSION['email'], null, 'teacher', 'active', null);
+
+   $result = $teacher->createCourse($title, $description, $content, $categoryId, $tags);
+   echo $result;
+}
+
+?>
+
 <script src="../../../public/css/admin.css"></script>
 </body>
 </html>

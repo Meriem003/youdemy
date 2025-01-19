@@ -220,7 +220,7 @@ tbody tr:hover {
         include '../../../model/config/conn.php';
         include '../../../model/class/class.php';
 
-        $admin = new Admin($pdo,null,null,null,null,null,null );
+        $admin = new Admin($pdo,null,null,null,null,null,null,null );
         if (isset($_GET['action']) && isset($_GET['users_id'])) {
             $action = $_GET['action'];
             $users =$_GET['users_id'];

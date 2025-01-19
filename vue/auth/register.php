@@ -1,7 +1,7 @@
 <?php 
 include('../../model/config/conn.php');
 include("../../model/class/class.php");
-$newRegesterOb=new User($pdo,null,null,null,null,null,null );;
+$newRegesterOb=new User($pdo,null,null,null,null,null,null,null );;
 if (isset($_POST["submit"])) {
     $name=$_POST["name"];
     $email=$_POST["email"];
@@ -9,9 +9,9 @@ if (isset($_POST["submit"])) {
     $role=$_POST["role"];
 try {
     $newRegesterOb->register($name,$email,$password,$role);
-} catch (Exception $th) {
-  echo $th->getMessage();
-}
+   } catch (Exception $e) {
+      echo "<p style='color: red;'>Error: " . $e->getMessage() . "</p>";
+  }
 }
 ?>
 <!DOCTYPE html>

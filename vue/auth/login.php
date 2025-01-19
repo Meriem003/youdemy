@@ -2,13 +2,19 @@
 session_start();
 include('../../model/config/conn.php');
 include("../../model/class/class.php");
-$newObjLogin=new User ($pdo,null,null,null,null,null,null );;
+$newObjLogin = new User($pdo, null,null, null, null, null, null, null);
+
 if (isset($_POST['submit'])) {
-    $email=$_POST["email"];
-    $password=$_POST["password"];
-$newObjLogin->loginFunc($email,$password);
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+    try {
+        $newObjLogin->loginFunc($email, $password);
+    } catch (Exception $e) {
+        echo "<p style='color: red;'>Error: " . $e->getMessage() . "</p>";
+    }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
