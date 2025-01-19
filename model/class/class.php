@@ -82,25 +82,22 @@ class Student extends User {
 
 
 class Teacher extends User {
-    private $createdCourses;
     protected $pdo;
     protected $id;
-
     public function __construct($pdo, $id, $name, $email, $password, $role, $status, $createdAT ) {
         parent::__construct($pdo, $id, $name, $email, $password, $role, $status, $createdAT );
         $this->pdo = $pdo;
         $this->id = $id;
     }
-
-    public function createCourse($title, $description, $content, $categoryId, $tags) {
+    public function createCourse($title, $description, $content, $type, $categoryId, $tags, $img) {
         try {
-            $stmt = $this->pdo->prepare("INSERT INTO Courses (title, description, content, categoryId, teacherId) VALUES (?, ?, ?, ?, ?)");
-            $stmt->execute([$title, $description, $content, $categoryId, $this->id]);
+            $stmt = $this->pdo->prepare("INSERT INTO Courses (title, description, content, type, categoryId, teacherId, img) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$title, $description, $content, $type, $categoryId, $this->id, $img]);
             $courseId = $this->pdo->lastInsertId();
-                if (!empty($tags)) {
+            if (!empty($tags)) {
                 $stmtTags = $this->pdo->prepare("INSERT INTO CourseTags (courseId, tagId) VALUES (?, ?)");
                 foreach ($tags as $tagId) {
-                    $stmtTags->execute([$courseId, $tagId]);
+                $stmtTags->execute([$courseId, $tagId]);
                 }
             }
             return "Le cours a été ajouté avec succès.";
@@ -108,16 +105,22 @@ class Teacher extends User {
             return "Erreur lors de la création du cours : " . $e->getMessage();
         }
     }
-    
+    public function viewAll () {
+        $sql = "SELECT * FROM Courses WHERE teacherId = :teacherId";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':teacherId', $this->id);
+        $stmt->execute();
+        $courses = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $courses[] = $row;
+        }
+        return $courses;
+    }
     public function updateCourse($course) {
-
     }
     public function deleteCourse($course) {
-
     }
-
     public function viewCourseStatistics() {
-
     }
 }
 
@@ -162,8 +165,7 @@ class Admin extends User {
     }
 }
 
-
-class Course {
+abstract class Course {
     private $id;
     private $title;
     private $description;
@@ -171,24 +173,36 @@ class Course {
     private $category;
     private $teacher;
     private $createdAt;
-    private $conn;
+    private $pdo;
 
-    public function __construct($pdo) {
-        $this->conn = $pdo;
-    }
-    public function addContent($content) {
-
-    }
-
-    public function updateContent($content) {
+    public function __construct($pdo, $content) {
+        $this->content = $content;
+        $this->pdo = $pdo;
 
     }
 
-    public function deleteContent($content) {
+    abstract public function display();
+
+    public function getContent() {
+        return $this->content;
+    }
+
+    public function setContent($content) {
+        $this->content = $content;
+    }
+}
+
+class Video extends Course {
+    public function display() {
 
     }
 }
 
+class Pdf extends Course {
+    public function display() {
+
+    }
+}
 
 class Category {
     private $id;

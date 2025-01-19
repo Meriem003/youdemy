@@ -38,9 +38,12 @@ CREATE TABLE Courses (
     categoryId INT NOT NULL,
     teacherId INT NOT NULL,
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    type ENUM('pdf', 'video') NOT NULL,
+    img VARCHAR(255),
     FOREIGN KEY (categoryId) REFERENCES Categories(id),
     FOREIGN KEY (teacherId) REFERENCES Users(id) ON DELETE CASCADE
 );
+
 
 CREATE TABLE Categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
