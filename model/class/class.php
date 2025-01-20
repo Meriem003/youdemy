@@ -169,19 +169,8 @@ class Admin extends User {
         return $users;
     }
     public function manageContent() {
-        $sql = "SELECT 
-                    Courses.id,
-                    Courses.title,
-                    Courses.description,
-                    Categories.name AS category,
-                    Users.name AS teacher_name,
-                    Courses.createdAt
-                FROM 
-                    Courses
-                JOIN 
-                    Categories ON Courses.categoryId = Categories.id
-                JOIN 
-                    Users ON Courses.teacherId = Users.id";
+        $sql = "SELECT Courses.id,Courses.title,Courses.description,Categories.name AS category,Users.name AS teacher_name,Courses.createdAt FROM Courses
+                JOIN Categories ON Courses.categoryId = Categories.id JOIN Users ON Courses.teacherId = Users.id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
