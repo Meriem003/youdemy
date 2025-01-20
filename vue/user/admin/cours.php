@@ -148,9 +148,8 @@ tbody tr:hover {
             }
             if (isset($_GET['id'])) {
                 $courseId = $_GET['id'];
-                $admin = new Admin($pdo, null, null, null, null, 'admin', 'active', null);
-                    $result = $admin->deleteCourse($courseId);
-                    echo $result;
+                $result = $admin->deleteCourseAdmin($courseId);
+                echo $result;
             }
 ?>
         </tbody>

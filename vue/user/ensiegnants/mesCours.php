@@ -91,7 +91,7 @@ if (!isset($_SESSION['status']) || $_SESSION['status'] !== "activer" || !isset($
     gap: 10px; /* Plus d'espacement entre les boutons */
 }
 
-.btn {
+.voir-plus , .delete-btn, .modify-btn{
     display: inline-block;
     background-color: var(--main-color); /* Couleur du bouton inchangée */
     color: var(--white);
@@ -111,6 +111,7 @@ if (!isset($_SESSION['status']) || $_SESSION['status'] !== "activer" || !isset($
 
 .modify-btn:hover {
     background-color:rgb(190, 190, 190);
+    color: #27ae60;
 }
 
 .delete-btn {
@@ -130,6 +131,7 @@ if (!isset($_SESSION['status']) || $_SESSION['status'] !== "activer" || !isset($
 
 .delete-btn:hover {
     background-color:rgb(190, 190, 190);
+    color: #c0392b;
 }
    </style>
 </head>
@@ -189,13 +191,20 @@ $courses = $teacher->viewAll();
                 <h3 class="course-title"><?php echo htmlspecialchars($course['title']); ?></h3>
                 <p class="course-description"><?php echo htmlspecialchars($course['description']); ?></p>
                 <div class="button-container">
-               <a href="edit_course.php?id=<?php echo $course['id']; ?>" class="btn modify-btn">Modifier</a>
-               <a href="delete_course.php?id=<?php echo $course['id']; ?>" class="btn delete-btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce cours ?');">Supprimer</a>
-               <a href="course_details.php?id=<?php echo $course['id']; ?>" class="btn voir-plus">Voir le cours</a>
+               <a href="mesCours.php?id=<?php echo $course['id']; ?>" class="btn modify-btn">Modifier</a>
+               <a href="mesCours.php?id=<?php echo $course['id']; ?>" class="btn delete-btn">Supprimer</a>
+               <a href="mesCours.php?id=<?php echo $course['id']; ?>" class="btn voir-plus">Voir le cours</a>
             </div>
             </div>
         </div>
     <?php endforeach; ?>
+    <?php
+      if (isset($_GET['id'])) {
+      $courseId = $_GET['id'];
+      $result = $teacher-> deleteCourseTeacher($courseId);
+      echo $result;
+      }
+    ?>
 </div>
 
 

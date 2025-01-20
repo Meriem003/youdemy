@@ -133,8 +133,12 @@ class Teacher extends User {
     public function updateCourse($course) {
         
     }
-    public function deleteCourse($course) {
-    }
+    public function deleteCourseTeacher($courseId) {
+        $sql = "DELETE FROM Courses WHERE id = :courseId";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':courseId', $courseId);
+        $stmt->execute();
+}
     public function viewCourseStatistics() {
     }
 }
@@ -180,16 +184,12 @@ class Admin extends User {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function deleteCourse($courseId) {
-        try {
-            $sql = "DELETE FROM Courses WHERE id = :courseId";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->bindParam(':courseId', $courseId, PDO::PARAM_INT);
-            $stmt->execute();
-        }catch (Exception $e) {
-            return "Erreur : " . $e->getMessage();
-        }
-    }
+    public function deleteCourseAdmin($courseId) {
+        $sql = "DELETE FROM Courses WHERE id = :courseId";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':courseId', $courseId);
+        $stmt->execute();
+}
     public function viewGlobalStatistics() {
 
     }
