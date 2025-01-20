@@ -222,10 +222,12 @@ tbody tr:hover {
       <a href="./dashboard.php"><i class="fa-solid fa-house"></i><span>home</span></a>
       <a href="tags.php"><i class="fa-solid fa-check"></i><span>gestion tags</span></a>
       <a href="catégorie.php"><i class="fa-solid fa-chart-pie"></i><span>gestion catégorie</span></a>
+      <a href="cours.php"><i class="fa-solid fa-book-open"></i><span>gestion cours</span></a>
       <a href="../pages/about.php" onclick="return confirm('logout from this website?');"><i class="fas fa-right-from-bracket"></i><span>logout</span></a>
    </nav>
 
 </div>
+
 <form action="" method="post" enctype="multipart/form-data" class="form-style">
     <h3>Ajouter une catégorie</h3>
     <p>Nom <span>*</span></p>

@@ -18,7 +18,6 @@ $courses = $student->viewAllCourses();
    <!-- custom css file link  -->
    <link rel="stylesheet" href="../../../public/css/style.css">
    <style>
-/* Root Variables */
 :root {
     --main-color: #8e44ad;
     --red: #e74c3c;
@@ -29,8 +28,6 @@ $courses = $student->viewAllCourses();
     --white: #fff;
     --border: .1rem solid rgba(0, 0, 0, .2);
 }
-
-/* Container for the course cards */
 .courses-container {
     display: flex;
     flex-wrap: wrap;
@@ -87,7 +84,7 @@ $courses = $student->viewAllCourses();
     margin: 0;
     line-height: 1.5;
     display: -webkit-box;
-    -webkit-line-clamp: 3; /* Limit description to 3 lines */
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -177,16 +174,16 @@ $courses = $student->viewAllCourses();
 <br>
 <h1 class="heading">our courses</h1>
 <div class="courses-container">
-    <?php foreach ($courses as $course): ?>
+    <?php foreach ($courses as $row): ?>
         <div class="course-card">
-            <img src="<?= $course['img'] ?>" alt="<?= $course['title'] ?>" class="course-img">
+            <img src="<?= $row['img'] ?>" alt="<?= $row['title'] ?>" class="course-img">
             <div class="info">
-            <h3 class="course-title"><?= $course['title'] ?></h3>
-            <p class="course-description"><?= $course['description']?></p>
+            <h3 class="course-title"><?= $row['title'] ?></h3>
+            <p class="course-description"><?= $row['description']?></p>
             </div>
             <div class="btn-container">
-            <a href="?id=<?= $course['id'] ?>" class="btn">View Details</a>
-            <a href="?id=<?= $course['id'] ?>" class="btn">Ajouté</a>
+            <a href="?id=<?= $row['id'] ?>" class="btn">View Details</a>
+            <a href="?id=<?= $row['id'] ?>" class="btn">Ajouté</a>
             </div>
         </div>
     <?php endforeach; ?>

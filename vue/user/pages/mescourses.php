@@ -75,6 +75,7 @@ if (isset($_SESSION['id'])) {
 <br>
 <h1 class="heading">mes courses</h1>
 
+
 <script src="../../../public/js/script.js"></script>
 
    

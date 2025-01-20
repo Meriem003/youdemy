@@ -34,7 +34,7 @@ class User {
                 header("Location: .../../../../vue/user/admin/dashboard.php");
                 exit();
             } elseif ($myuser["role"] === "teacher") {
-                header("Location: .../../../../vue/user/ensiegnants/dashboard.php");
+                header(header: "Location: .../../../../vue/user/ensiegnants/dashboard.php");
                 exit();
             } else {
                 header("Location: .../../../../vue/user/pages/about.php");
@@ -169,8 +169,25 @@ class Admin extends User {
         return $users;
     }
     public function manageContent() {
-
+        $sql = "SELECT 
+                    Courses.id,
+                    Courses.title,
+                    Courses.description,
+                    Categories.name AS category,
+                    Users.name AS teacher_name,
+                    Courses.createdAt
+                FROM 
+                    Courses
+                JOIN 
+                    Categories ON Courses.categoryId = Categories.id
+                JOIN 
+                    Users ON Courses.teacherId = Users.id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
+    
     public function viewGlobalStatistics() {
 
     }
@@ -327,20 +344,4 @@ class Tag {
 
     }
 }
-
-
-class Subscription {
-    private $id;
-    private $studentId;
-    private $courseId;
-    private $status;
-    private $enrollmentDate;
-
-    private $conn;
-
-    public function __construct($pdo) {
-        $this->conn = $pdo;
-    }
-}
-
 ?>
