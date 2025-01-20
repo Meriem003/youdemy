@@ -219,7 +219,7 @@ tbody tr:hover {
    <div class="profile">
       <img src="../../../public/images/pic-7.jpg" class="image" alt="">
       <h3 class="name">meryam salhi</h3>
-      <a href="../pages/about.php" class="btn">logout</a>
+      <a href="../pages/about.php"  onclick="return confirm('logout from this website?');"class="btn">logout</a>
    </div>
    <nav class="navbar">
       <a href="./dashboard.php"><i class="fa-solid fa-house"></i><span>home</span></a>

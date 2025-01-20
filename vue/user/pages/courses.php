@@ -18,8 +18,8 @@ $courses = $student->viewAllCourses();
    <!-- custom css file link  -->
    <link rel="stylesheet" href="../../../public/css/style.css">
    <style>
-:root {
-    --main-color: #8e44ad;
+    :root {
+    --main-color: #8e44ad; /* Couleur principale inchangée */
     --red: #e74c3c;
     --orange: #f39c12;
     --light-color: #888;
@@ -28,102 +28,91 @@ $courses = $student->viewAllCourses();
     --white: #fff;
     --border: .1rem solid rgba(0, 0, 0, .2);
 }
+
 .courses-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    justify-content: space-around;
-    margin: 20px auto;
+    gap: 20px; /* Augmentation de l'espacement entre les cartes */
+    justify-content: center; /* Centrage des cartes */
+    margin: 40px auto; /* Plus de marge */
     max-width: 1200px;
 }
 
-/* Individual course card */
 .course-card {
     background-color: var(--white);
     border: var(--border);
-    border-radius: 8px;
-    width: 300px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 15px; /* Coins plus arrondis */
+    width: 350px; /* Largeur de carte augmentée */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Ombrage modifié */
     overflow: hidden;
     transition: transform 0.3s ease-in-out;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    text-align: center; /* Centrage du texte */
+    margin: 0 auto; /* Centre chaque carte dans son conteneur */
 }
 
-/* On hover, the course card will slightly lift */
 .course-card:hover {
-    transform: translateY(-10px);
+    transform: scale(1.05); /* Zoom lors du survol */
 }
 
-/* Image styling */
 .course-img {
     width: 100%;
-    height: 200px;
+    height: 170px; /* Légèrement plus petit */
     object-fit: cover;
 }
 
-/* Info container - for the title and description */
 .info {
-    padding: 15px;
-    text-align: center;
+    padding: 10px; /* Plus de padding */
 }
 
-/* Title of the course */
 .course-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--black);
-    margin-bottom: 10px;
+    font-size: 2rem; /* Taille de police augmentée */
+    font-weight: 800; /* Poids de police augmenté */
+    color: var(--main-color); /* Couleur du titre inchangée */
+    margin-bottom: 15px;
 }
 
-/* Description styling */
 .course-description {
-    font-size: 1rem;
+    font-size: 1.4rem;
     color: var(--light-color);
     margin: 0;
-    line-height: 1.5;
+    line-height: 1.6;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    margin-bottom: 10px; /* Ajout d'une marge en bas */
 }
 
-/* Button container */
 .btn-container {
-    padding: 5px;
+    padding: 10px; /* Plus de padding */
     text-align: center;
     border-top: var(--border);
     display: flex;
-    justify-content: center; 
-    gap: 10px;
+    justify-content: center;
+    gap: 10px; /* Plus d'espacement entre les boutons */
 }
 
-/* Button styling */
 .btn {
     display: inline-block;
-    background-color: var(--main-color);
+    background-color: var(--main-color); /* Couleur du bouton inchangée */
     color: var(--white);
     text-align: center;
-    padding: 10px 15px;
+    padding: 10px 10px; /* Boutons plus grands */
     text-decoration: none;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+    border-radius: 8px; /* Plus d'arrondi sur les boutons */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-bottom: 6px;
+    width: 130px;
 }
 
 .btn:hover {
-    background-color: var(--black);
+    background-color:  #f39c12;;
+    transform: translateY(-3px);
 }
-@media (max-width: 768px) {
-    .courses-container {
-        justify-content: center;
-    }
 
-    .course-card {
-        width: 100%;
-        max-width: 350px;
-    }
-}
 
 </style>
 </head>
@@ -162,7 +151,6 @@ $courses = $student->viewAllCourses();
       <img src="../../../public/images/pic-1.jpg" class="image" alt="">
       <h3 class="name">user</h3>
       <p class="role">Étudiant</p>
-      <a href="../../auth/register.php" class="btn">create account</a>
    </div>
    <nav class="navbar">
       <a href="about.php"><i class="fas fa-home"></i><span>home</span></a>
@@ -176,18 +164,21 @@ $courses = $student->viewAllCourses();
 <div class="courses-container">
     <?php foreach ($courses as $row): ?>
         <div class="course-card">
-            <img src="<?= $row['img'] ?>" alt="<?= $row['title'] ?>" class="course-img">
+            <img src="<?= htmlspecialchars($row['img']) ?>" alt="<?= htmlspecialchars($row['title']) ?>" class="course-img">
             <div class="info">
-            <h3 class="course-title"><?= $row['title'] ?></h3>
-            <p class="course-description"><?= $row['description']?></p>
+                <h3 class="course-title"><?= htmlspecialchars($row['title']) ?></h3>
+                <p class="course-description"><?= htmlspecialchars($row['description']) ?></p>
+                <p><strong>Catégorie :</strong> <?= htmlspecialchars($row['category']) ?></p>
+                <p><strong>Enseignant :</strong> <?= htmlspecialchars($row['teacher_name']) ?></p>
             </div>
             <div class="btn-container">
-            <a href="?id=<?= $row['id'] ?>" class="btn">View Details</a>
-            <a href="?id=<?= $row['id'] ?>" class="btn">Ajouté</a>
+                <a href="?id=<?= $row['id'] ?>" class="btn">View Details</a>
+                <a href="?id=<?= $row['id'] ?>" class="btn">Ajouté</a>
             </div>
         </div>
     <?php endforeach; ?>
 </div>
+
 
 
 

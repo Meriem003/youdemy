@@ -1,6 +1,12 @@
 <?php
-require '../../../model/config/conn.php';
 require '../../../model/class/class.php';
+require '../../../model/config/conn.php';
+session_start();
+if (!isset($_SESSION['status']) || $_SESSION['status'] !== "activer" || !isset($_SESSION['id'])) {
+   header("Location: ../../../auth/login.php");
+   exit;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,66 +29,79 @@ require '../../../model/class/class.php';
     --border: .1rem solid rgba(0, 0, 0, .2);
 }
 .courses-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: space-between;
-  margin: 20px;
+   display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Augmentation de l'espacement entre les cartes */
+    justify-content: center; /* Centrage des cartes */
+    margin: 40px auto; /* Plus de marge */
+    max-width: 1200px;
 }
 .course-card {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 300px;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: var(--white);
+    border: var(--border);
+    border-radius: 15px; /* Coins plus arrondis */
+    width: 350px; /* Largeur de carte augmentée */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Ombrage modifié */
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center; /* Centrage du texte */
+    margin: 0 auto; /* Centre chaque carte dans son conteneur */
+}
+.course-card:hover {
+    transform: scale(1.05); /* Zoom lors du survol */
 }
 
-.course-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-}
 .course-img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-bottom: 2px solid #f1f1f1;
+    width: 100%;
+    height: 170px; /* Légèrement plus petit */
+    object-fit: cover;
 }
 .course-info {
-  padding: 20px;
+   padding: 10px; /* Plus de padding */
 }
 
 .course-title {
-  font-size: 20px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 10px;
+    font-size: 2rem; /* Taille de police augmentée */
+    font-weight: 800; /* Poids de police augmenté */
+    color: var(--main-color); /* Couleur du titre inchangée */
+    margin-bottom: 15px;
 }
 
 .course-description {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 15px;
-  line-height: 1.5;
-  height: 80px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    font-size: 1.4rem;
+    color: var(--light-color);
+    margin: 0;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 10px; /* Ajout d'une marge en bas */
 }
 
-.button-container {
-    display: flex; 
-    gap: 10px;
-    justify-content: flex-start; 
+.btn-container {
+    padding: 10px; /* Plus de padding */
+    text-align: center;
+    border-top: var(--border);
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Plus d'espacement entre les boutons */
 }
 
 .btn {
-    padding: 5px 5px;
-    font-size: 14px;
+    display: inline-block;
+    background-color: var(--main-color); /* Couleur du bouton inchangée */
+    color: var(--white);
     text-align: center;
-    border-radius: 5px;
+    padding: 10px 10px; /* Boutons plus grands */
     text-decoration: none;
-    color: #fff;
-    transition: background-color 0.3s ease;
+    border-radius: 8px; /* Plus d'arrondi sur les boutons */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-bottom: 6px;
+    width: 130px;
 }
 
 .modify-btn {
@@ -98,6 +117,16 @@ require '../../../model/class/class.php';
    background-color: #c0392b;
    color: var(--white);
 }
+.voir-plus{
+   background-color:rgb(198, 132, 28);
+   color: var(--white);
+}
+.voir-plus:hover{
+   background-color:rgb(197, 191, 182);
+   color: rgb(198, 132, 28);
+}
+
+
 
 .delete-btn:hover {
     background-color:rgb(190, 190, 190);
@@ -137,7 +166,7 @@ require '../../../model/class/class.php';
    <div class="profile">
       <img src="../../../public/images/pic-7.jpg" class="image" alt="">
       <h3 class="name">ensiegnants</h3>
-      <a href="../pages/about.php" class="btn">logout</a>
+      <a href="../pages/about.php"  onclick="return confirm('logout from this website?');"class="btn">logout</a>
    </div>
    <nav class="navbar">
       <a href="dashboard.php"><i class="fas fa-home"></i><span>home</span></a>
@@ -148,8 +177,7 @@ require '../../../model/class/class.php';
    </nav>
 </div>
 <div>
-<?php
-session_start(); 
+<?php 
 $teacher = new Teacher($pdo, $_SESSION['id'], $_SESSION['name'], $_SESSION['email'], null, 'teacher', 'active', null);
 $courses = $teacher->viewAll();
 ?>
@@ -161,9 +189,9 @@ $courses = $teacher->viewAll();
                 <h3 class="course-title"><?php echo htmlspecialchars($course['title']); ?></h3>
                 <p class="course-description"><?php echo htmlspecialchars($course['description']); ?></p>
                 <div class="button-container">
-               <a href="course_details.php?id=<?php echo $course['id']; ?>" class="btn">Voir le cours</a>
                <a href="edit_course.php?id=<?php echo $course['id']; ?>" class="btn modify-btn">Modifier</a>
                <a href="delete_course.php?id=<?php echo $course['id']; ?>" class="btn delete-btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce cours ?');">Supprimer</a>
+               <a href="course_details.php?id=<?php echo $course['id']; ?>" class="btn voir-plus">Voir le cours</a>
             </div>
             </div>
         </div>

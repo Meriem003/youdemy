@@ -30,6 +30,7 @@ class User {
             $_SESSION["name"] = $myuser["name"];
             $_SESSION["email"] = $myuser["email"];
             $_SESSION["role"] = $myuser["role"];
+            $_SESSION["status"]=$myuser["status"];
                 if ($myuser["role"] === "admin") {
                 header("Location: .../../../../vue/user/admin/dashboard.php");
                 exit();
@@ -74,7 +75,9 @@ class Student extends User {
     }
 
     public function viewAllCourses() {
-        $sql = "SELECT * FROM Courses";
+        $sql = "SELECT Courses.id,Courses.title,Courses.description,Courses.img,Categories.name AS category,Users.name AS teacher_name FROM Courses
+                JOIN Categories ON Courses.categoryId = Categories.id
+                JOIN Users ON Courses.teacherId = Users.id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         $courses = [];
@@ -83,6 +86,7 @@ class Student extends User {
         }
         return $courses;
     }
+    
     
     public function removeCourse($course) {
 

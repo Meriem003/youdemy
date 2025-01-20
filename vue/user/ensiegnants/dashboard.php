@@ -1,3 +1,13 @@
+<?php
+require '../../../model/config/conn.php';
+require '../../../model/class/class.php';
+session_start();
+if (!isset($_SESSION['status']) || $_SESSION['status'] !== "activer") {
+   header("Location: .../../../../auth/login.php");
+   exit;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

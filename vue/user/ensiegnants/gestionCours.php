@@ -2,9 +2,9 @@
 require '../../../model/config/conn.php';
 require '../../../model/class/class.php';
 session_start();
-if (!isset($_SESSION['id'])) {
-    echo "Erreur : Vous devez être connecté en tant qu'enseignant pour accéder à cette page.";
-    exit;
+if (!isset($_SESSION['status']) || $_SESSION['status'] !== "activer" || !isset($_SESSION['id'])) {
+   header("Location: .../../../../auth/login.php");
+   exit;
 }
 // var_dump($_SESSION['id']);
 ?>
@@ -147,7 +147,7 @@ if (!isset($_SESSION['id'])) {
    <div class="profile">
       <img src="../../../public/images/pic-7.jpg" class="image" alt="">
       <h3 class="name">ensiegnants</h3>
-      <a href="../pages/about.php" class="btn">logout</a>
+      <a href="../pages/about.php"  onclick="return confirm('logout from this website?');"class="btn">logout</a>
    </div>
    <nav class="navbar">
       <a href="dashboard.php"><i class="fas fa-home"></i><span>home</span></a>
