@@ -2,11 +2,14 @@
 require '../../../model/config/conn.php';
 require '../../../model/class/class.php';
 session_start();
-if (isset($_SESSION['id'])) {
+if (!isset($_SESSION['status']) || $_SESSION['status'] !== "activer") {
+   header("Location: .../../../../auth/login.php");
+   exit;
+}elseif(isset($_SESSION['id'])) {
     $userId = $_SESSION['id'];
     $user = new Student($pdo, $_SESSION['id'], $_SESSION['name'], $_SESSION['email'], null, 'null', 'null', null);
-} else {
-   header("location:.../../../../auth/login.php");
+}else{
+   header("Location: ../../about.php");
    exit;
 }
 ?>
@@ -35,10 +38,10 @@ if (isset($_SESSION['id'])) {
       </form>
 
       <div class="icons">
-         <div id="menu-btn" class="fas fa-bars"></div>
+      <div id="menu-btn" class="fas fa-bars"></div>
          <div id="search-btn" class="fas fa-search"></div>
          <div id="user-btn" class="fas fa-user"></div>
-         <div id="toggle-btn" class="fas fa-sun"></div>
+         <div id="toggle-btn" class="fas fa-sun" style="display: none;"></div>
       </div>
       <div class="profile">
       <h3>please login or register</h3>
@@ -62,7 +65,6 @@ if (isset($_SESSION['id'])) {
       <img src="../../../public/images/pic-1.jpg" class="image" alt="">
       <h3 class="name">user</h3>
       <p class="role">Étudiant</p>
-      <a href="../../auth/register.php" class="btn">create account</a>
    </div>
 
    <nav class="navbar">

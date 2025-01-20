@@ -27,10 +27,10 @@
       </form>
 
       <div class="icons">
-         <div id="menu-btn" class="fas fa-bars"></div>
+      <div id="menu-btn" class="fas fa-bars"></div>
          <div id="search-btn" class="fas fa-search"></div>
          <div id="user-btn" class="fas fa-user"></div>
-         <div id="toggle-btn" class="fas fa-sun"></div>
+         <div id="toggle-btn" class="fas fa-sun" style="display: none;"></div>
       </div>
 
       <div class="profile">
@@ -55,7 +55,6 @@
       <img src="../../../public/images/pic-1.jpg" class="image" alt="">
       <h3 class="name">user</h3>
       <p class="role">Étudiant</p>
-      <a href="../../auth/register.php" class="btn">create account</a>
    </div>
    <nav class="navbar">
       <a href="about.php"><i class="fas fa-home"></i><span>home</span></a>
