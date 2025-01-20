@@ -133,11 +133,17 @@ class Teacher extends User {
     public function updateCourse($course) {
         
     }
-    public function deleteCourseTeacher($courseId) {
-        $sql = "DELETE FROM Courses WHERE id = :courseId";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam(':courseId', $courseId);
-        $stmt->execute();
+public function deleteCourseTeacher($courseId) {
+    if (isset($courseId)) {
+        try {
+            $sql = "DELETE FROM Courses WHERE id = :courseId";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam(':courseId', $courseId);
+            $stmt->execute();
+        } catch (Exception $e) {
+            return "Erreur lors de la suppression du cours : " . $e->getMessage();
+        }
+    }
 }
     public function viewCourseStatistics() {
     }
@@ -185,11 +191,18 @@ class Admin extends User {
     }
 
     public function deleteCourseAdmin($courseId) {
-        $sql = "DELETE FROM Courses WHERE id = :courseId";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam(':courseId', $courseId);
-        $stmt->execute();
-}
+        if (isset($courseId)) {
+            try {
+                $sql = "DELETE FROM Courses WHERE id = :courseId";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->bindParam(':courseId', $courseId);
+                $stmt->execute();
+            } catch (Exception $e) {
+                return "Erreur lors de la suppression du cours : " . $e->getMessage();
+            }
+        }
+    }
+    
     public function viewGlobalStatistics() {
 
     }

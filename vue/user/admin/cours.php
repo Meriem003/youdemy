@@ -4,6 +4,12 @@ require '../../../model/class/class.php';
 
 $admin = new Admin($pdo, null, null, null, null, null, null, null);
 $courses = $admin->manageContent();
+if (isset($_GET['id'])) {
+    $courseId = $_GET['id'];
+    $result = $admin->deleteCourseAdmin($courseId);
+    header("Location: ../../../admin/cours.php"); 
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -145,11 +151,6 @@ tbody tr:hover {
             echo "<td>" . htmlspecialchars($course['createdAt']) . "</td>";
             echo "<td><a href='./cours.php?id=" . $course['id'] . "' class='delete-btn'><i class='fas fa-trash'></i></a></td>";
             echo "</tr>";
-            }
-            if (isset($_GET['id'])) {
-                $courseId = $_GET['id'];
-                $result = $admin->deleteCourseAdmin($courseId);
-                echo $result;
             }
 ?>
         </tbody>

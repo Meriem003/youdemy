@@ -6,8 +6,8 @@ if (!isset($_SESSION['status']) || $_SESSION['status'] !== "activer" || !isset($
    header("Location: ../../../auth/login.php");
    exit;
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -198,16 +198,13 @@ $courses = $teacher->viewAll();
             </div>
         </div>
     <?php endforeach; ?>
-    <?php
-      if (isset($_GET['id'])) {
-      $courseId = $_GET['id'];
-      $result = $teacher-> deleteCourseTeacher($courseId);
-      echo $result;
-      }
-    ?>
 </div>
-
-
+<?php
+if (isset($_GET['id'])) {
+   $courseId = $_GET['id'];
+   $result = $teacher->deleteCourseTeacher($courseId);
+}
+?>
 </div>
 <script src="../../../public/css/admin.css"></script>
 </body>
