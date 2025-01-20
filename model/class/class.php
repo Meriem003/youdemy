@@ -37,7 +37,7 @@ class User {
                 header("Location: .../../../../vue/user/ensiegnants/dashboard.php");
                 exit();
             } else {
-                header("Location: .../../../vue/user/pages/about.php");
+                header("Location: .../../../../vue/user/pages/about.php");
                 exit();
             }
         } else {
@@ -62,19 +62,28 @@ class User {
 
 class Student extends User {
     private $coursesList;
+    private $pdo;
 
     public function __construct($pdo, $id, $name, $email, $password, $role, $status, $createdAT) {
         parent::__construct($pdo, $id, $name, $email, $password, $role, $status, $createdAT );
+        $this->pdo = $pdo;
     }
 
     public function addCourse($course) {
 
     }
 
-    public function viewCourse($course) {
-
+    public function viewAllCourses() {
+        $sql = "SELECT * FROM Courses";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $courses = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $courses[] = $row;
+        }
+        return $courses;
     }
-
+    
     public function removeCourse($course) {
 
     }
@@ -268,7 +277,6 @@ class Tag {
     private $id;
     private $name;
     private $pdo;
-
     public function __construct($pdo,$name,$id) {
         $this->pdo = $pdo;
         $this->name = $name;

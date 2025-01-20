@@ -57,12 +57,10 @@
       <p class="role">Étudiant</p>
       <a href="../../auth/register.php" class="btn">create account</a>
    </div>
-
    <nav class="navbar">
       <a href="about.php"><i class="fas fa-home"></i><span>home</span></a>
       <a href="courses.php"><i class="fas fa-graduation-cap"></i><span>courses</span></a>
-      <a href="teachers.php"><i class="fas fa-chalkboard-user"></i><span>teachers</span></a>
-      <a href="ourCourses.php"><i class="fa-solid fa-book-open"></i><span>mes Courses</span></a>
+      <a href="mescourses.php"><i class="fa-solid fa-book-open"></i><span>mes Courses</span></a>
       <a href="contact.php"><i class="fas fa-headset"></i><span>contact us</span></a>
    </nav>
 </div>
