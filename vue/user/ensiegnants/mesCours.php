@@ -9,14 +9,19 @@ require '../../../model/class/class.php';
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>contact us</title>
-
-   <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
-
-   <!-- custom css file link  -->
    <link rel="stylesheet" href="../../../public/css/style.css">
 <style>
-/* Container for the courses */
+   :root {
+    --main-color: #8e44ad;
+    --red: #e74c3c;
+    --orange: #f39c12;
+    --light-color: #888;
+    --light-bg: #eee;
+    --black: #2c3e50;
+    --white: #fff;
+    --border: .1rem solid rgba(0, 0, 0, .2);
+}
 .courses-container {
   display: flex;
   flex-wrap: wrap;
@@ -24,8 +29,6 @@ require '../../../model/class/class.php';
   justify-content: space-between;
   margin: 20px;
 }
-
-/* Individual course card styling */
 .course-card {
   background-color: #fff;
   border-radius: 8px;
@@ -39,16 +42,12 @@ require '../../../model/class/class.php';
   transform: translateY(-10px);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
-
-/* Image styling */
 .course-img {
   width: 100%;
   height: 200px;
   object-fit: cover;
   border-bottom: 2px solid #f1f1f1;
 }
-
-/* Course info section */
 .course-info {
   padding: 20px;
 }
@@ -70,39 +69,39 @@ require '../../../model/class/class.php';
   text-overflow: ellipsis;
 }
 
-/* Button styling */
-.course-info .btn {
-  display: inline-block;
-  background-color: #007BFF;
-  color: #fff;
-  padding: 10px 20px;
-  font-size: 14px;
-  border-radius: 5px;
-  text-decoration: none;
-  text-align: center;
-  transition: background-color 0.3s ease;
+.button-container {
+    display: flex; 
+    gap: 10px;
+    justify-content: flex-start; 
 }
 
-.course-info .btn:hover {
-  background-color: #0056b3;
+.btn {
+    padding: 5px 5px;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #fff;
+    transition: background-color 0.3s ease;
 }
 
-/* Responsiveness */
-@media (max-width: 768px) {
-  .courses-container {
-    justify-content: center;
-  }
-  .course-card {
-    width: 250px;
-  }
+.modify-btn {
+   background-color: #27ae60;
+   color: var(--white);
 }
 
-@media (max-width: 480px) {
-  .course-card {
-    width: 100%;
-  }
+.modify-btn:hover {
+    background-color:rgb(190, 190, 190);
 }
 
+.delete-btn {
+   background-color: #c0392b;
+   color: var(--white);
+}
+
+.delete-btn:hover {
+    background-color:rgb(190, 190, 190);
+}
    </style>
 </head>
 <body>
@@ -144,7 +143,7 @@ require '../../../model/class/class.php';
       <a href="dashboard.php"><i class="fas fa-home"></i><span>home</span></a>
       <a href="mesCours.php"><i class="fa-solid fa-book"></i><span>Mes cours</span></a>
       <a href="gestionCours.php"><i class="fa-solid fa-list"></i><span>gestion cours</span></a>
-      <a href="statistiques.php"><i class="fa-solid fa-chart-pie"></i><span>statistiques</span></a>
+      <a href="dashboard.php"><i class="fa-solid fa-chart-pie"></i><span>statistiques</span></a>
       <a href="../pages/about.php" onclick="return confirm('logout from this website?');"><i class="fas fa-right-from-bracket"></i><span>logout</span></a>
    </nav>
 </div>
@@ -161,11 +160,16 @@ $courses = $teacher->viewAll();
             <div class="course-info">
                 <h3 class="course-title"><?php echo htmlspecialchars($course['title']); ?></h3>
                 <p class="course-description"><?php echo htmlspecialchars($course['description']); ?></p>
-                <a href="course_details.php?id=<?php echo $course['id']; ?>" class="btn">Voir le cours</a>
+                <div class="button-container">
+               <a href="course_details.php?id=<?php echo $course['id']; ?>" class="btn">Voir le cours</a>
+               <a href="edit_course.php?id=<?php echo $course['id']; ?>" class="btn modify-btn">Modifier</a>
+               <a href="delete_course.php?id=<?php echo $course['id']; ?>" class="btn delete-btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce cours ?');">Supprimer</a>
+            </div>
             </div>
         </div>
     <?php endforeach; ?>
 </div>
+
 
 </div>
 <script src="../../../public/css/admin.css"></script>

@@ -118,6 +118,7 @@ class Teacher extends User {
     }
     
     public function updateCourse($course) {
+        
     }
     public function deleteCourse($course) {
     }

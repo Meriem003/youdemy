@@ -5,11 +5,7 @@
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>contact us</title>
-
-   <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
-
-   <!-- custom css file link  -->
    <link rel="stylesheet" href="../../../public/css/style.css">
 <style>
 :root {
@@ -22,7 +18,6 @@
     --white: #fff;
     --border: .1rem solid rgba(0, 0, 0, .2);
 }
-
 .table-responsive {
     margin: 20px auto; 
     width: 90%; 
@@ -156,10 +151,6 @@ tbody tr:hover {
 .active:hover i, .inactive:hover i, .baned:hover i {
     transform: scale(1.2);
 }
-
-
-
-
 </style>
 </head>
 <body>
