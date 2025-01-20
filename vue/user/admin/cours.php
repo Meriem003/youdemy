@@ -1,7 +1,7 @@
 <?php
 require '../../../model/config/conn.php';
 require '../../../model/class/class.php';
-session_start();
+
 $admin = new Admin($pdo, null, null, null, null, null, null, null);
 $courses = $admin->manageContent();
 ?>
@@ -143,10 +143,16 @@ tbody tr:hover {
             echo "<td>" . htmlspecialchars($course['description']) . "</td>";
             echo "<td>" . htmlspecialchars($course['teacher_name']) . "</td>";
             echo "<td>" . htmlspecialchars($course['createdAt']) . "</td>";
-            echo "<td><a href='delete_course.php?id=" . $course['id'] . "' class='delete-btn'><i class='fas fa-trash'></i></a></td>";
+            echo "<td><a href='./cours.php?id=" . $course['id'] . "' class='delete-btn'><i class='fas fa-trash'></i></a></td>";
             echo "</tr>";
             }
-            ?>
+            if (isset($_GET['id'])) {
+                $courseId = $_GET['id'];
+                $admin = new Admin($pdo, null, null, null, null, 'admin', 'active', null);
+                    $result = $admin->deleteCourse($courseId);
+                    echo $result;
+            }
+?>
         </tbody>
     </table>
 </div>

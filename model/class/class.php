@@ -179,8 +179,17 @@ class Admin extends User {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
-    
+
+    public function deleteCourse($courseId) {
+        try {
+            $sql = "DELETE FROM Courses WHERE id = :courseId";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam(':courseId', $courseId, PDO::PARAM_INT);
+            $stmt->execute();
+        }catch (Exception $e) {
+            return "Erreur : " . $e->getMessage();
+        }
+    }
     public function viewGlobalStatistics() {
 
     }

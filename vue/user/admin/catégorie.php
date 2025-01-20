@@ -2,6 +2,7 @@
 require '../../../model/config/conn.php';
 require '../../../model/class/class.php';
 
+
 if (isset($_POST["add"])) {
    $name = htmlspecialchars($_POST["name"]);
    $Category = new Category($pdo, $name, null);
