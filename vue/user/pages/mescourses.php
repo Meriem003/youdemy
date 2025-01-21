@@ -2,15 +2,19 @@
 require '../../../model/config/conn.php';
 require '../../../model/class/class.php';
 session_start();
+
+// Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['status']) || $_SESSION['status'] !== "activer") {
-   header("Location: .../../../../auth/login.php");
-   exit;
-}elseif(isset($_SESSION['id'])) {
+    header("Location: ../../auth/login.php");
+    exit;
+}
+if (isset($_SESSION['id'])) {
     $userId = $_SESSION['id'];
-    $user = new Student($pdo, $_SESSION['id'], $_SESSION['name'], $_SESSION['email'], null, 'null', 'null', null);
-}else{
-   header("Location: ../../about.php");
-   exit;
+    $student = new Student($pdo, $userId, $_SESSION['name'], $_SESSION['email'], null, null, null, null);
+    $courses = $student->getCoursesBySubs($userId);
+} else {
+    header("Location: ../../about.php");
+    exit;
 }
 ?>
 <!DOCTYPE html>
@@ -24,6 +28,104 @@ if (!isset($_SESSION['status']) || $_SESSION['status'] !== "activer") {
    <link rel="stylesheet" href="../../../public/css/style.css">
 
 </head>
+<style>
+    :root {
+    --main-color: #8e44ad; /* Couleur principale inchangée */
+    --red: #e74c3c;
+    --orange: #f39c12;
+    --light-color: #888;
+    --light-bg: #eee;
+    --black: #2c3e50;
+    --white: #fff;
+    --border: .1rem solid rgba(0, 0, 0, .2);
+}
+
+.courses-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Augmentation de l'espacement entre les cartes */
+    justify-content: center; /* Centrage des cartes */
+    margin: 40px auto; /* Plus de marge */
+    max-width: 1200px;
+}
+
+.course-card {
+    background-color: var(--white);
+    border: var(--border);
+    border-radius: 15px; /* Coins plus arrondis */
+    width: 350px; /* Largeur de carte augmentée */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Ombrage modifié */
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center; /* Centrage du texte */
+    margin: 0 auto; /* Centre chaque carte dans son conteneur */
+}
+
+.course-card:hover {
+    transform: scale(1.05); /* Zoom lors du survol */
+}
+
+.course-img {
+    width: 100%;
+    height: 170px; /* Légèrement plus petit */
+    object-fit: cover;
+}
+
+.info {
+    padding: 10px; /* Plus de padding */
+}
+
+.course-title {
+    font-size: 2rem; /* Taille de police augmentée */
+    font-weight: 800; /* Poids de police augmenté */
+    color: var(--main-color); /* Couleur du titre inchangée */
+    margin-bottom: 15px;
+}
+
+.course-description {
+    font-size: 1.4rem;
+    color: var(--light-color);
+    margin: 0;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 10px; /* Ajout d'une marge en bas */
+}
+
+.btn-container {
+    padding: 10px; /* Plus de padding */
+    text-align: center;
+    border-top: var(--border);
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Plus d'espacement entre les boutons */
+}
+
+.btn {
+    display: inline-block;
+    background-color: var(--main-color); /* Couleur du bouton inchangée */
+    color: var(--white);
+    text-align: center;
+    padding: 10px 10px; /* Boutons plus grands */
+    text-decoration: none;
+    border-radius: 8px; /* Plus d'arrondi sur les boutons */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-bottom: 6px;
+    width: 130px;
+}
+
+.btn:hover {
+    background-color:  #f39c12;;
+    transform: translateY(-3px);
+}
+
+
+</style>
 <body>
 
 <header class="header">
@@ -75,7 +177,24 @@ if (!isset($_SESSION['status']) || $_SESSION['status'] !== "activer") {
    </nav>
 </div>
 <br>
-<h1 class="heading">mes courses</h1>
+<h1 class="heading">Mes Courses</h1>
+
+<div class="courses-container">
+    <?php foreach ($courses as $course): ?>
+        <div class="course-card">
+        <img src="<?= htmlspecialchars($course['course_image'] ?? 'images/default-image.jpg') ?>" alt="<?= htmlspecialchars($course['course_title'] ?? 'Course Title Not Available') ?>" class="course-img">
+        <div class="info">
+                <h3><?= htmlspecialchars($course['course_title'] ?? 'Course Title Not Available') ?></h3>
+                <p><?= htmlspecialchars($course['course_description'] ?? 'Description Not Available') ?></p>
+            </div>
+            <div class="btn-container">
+            <a href="courses.php?idView=<?= $row['id'] ?>" class="btn">remove</a>
+            <a href="courses.php?idView=<?= $row['id'] ?>" class="btn">View Details</a>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>
+
 
 
 <script src="../../../public/js/script.js"></script>

@@ -1,8 +1,18 @@
 <?php
 require '../../../model/config/conn.php';
 require '../../../model/class/class.php';
-$student = new Student($pdo, null, null, null, null, null, null, null); // Dummy values for the constructor
-$courses = $student->viewAllCourses(); 
+session_start();
+if (!isset($_SESSION['status']) || $_SESSION['status'] !== "activer") {
+    header("Location: ../../auth/login.php");
+    exit;
+}
+$student = new Student($pdo, $_SESSION['id'], $_SESSION['name'], $_SESSION['email'], null, null, null, null);
+if (isset($_GET['id']) && isset($_SESSION['id'])) {
+    $courseId = intval($_GET['id']);
+    $userId = $_SESSION['id'];
+    $response = $student->addCourse($userId, $courseId);
+}
+$courses = $student->viewAllCourses();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -172,16 +182,12 @@ $courses = $student->viewAllCourses();
                 <p><strong>Enseignant :</strong> <?= htmlspecialchars($row['teacher_name']) ?></p>
             </div>
             <div class="btn-container">
-                <a href="?id=<?= $row['id'] ?>" class="btn">View Details</a>
-                <a href="?id=<?= $row['id'] ?>" class="btn">Ajouté</a>
+            <a href="?idView=<?= $row['id'] ?>" class="btn">View Details</a>
+            <a href="mescourses.php?id=<?= $row['id']?>&iduser=<?=$_SESSION["id"]?>" class="btn">Subscribe</a>
             </div>
         </div>
     <?php endforeach; ?>
 </div>
-
-
-
-
 <script src="../../../public/js/script.js"></script>
 </body>
 </html>

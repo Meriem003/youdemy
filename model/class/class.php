@@ -70,8 +70,26 @@ class Student extends User {
         $this->pdo = $pdo;
     }
 
-    public function addCourse($course) {
+    public function getCoursesBySubs($userId) {
+        $stmt = $this->pdo->prepare("SELECT courses.id AS course_id, courses.title AS course_title, courses.description AS course_description, courses.img AS course_image
+        FROM subscriptions 
+        INNER JOIN courses ON subscriptions.courseId = courses.id
+        WHERE subscriptions.studentId = :user_id;");
+        $stmt->execute([':user_id' => $userId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
 
+    public function addCourse($userId, $id) {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM subscriptions WHERE studentId = :student_id AND courseId = :course_id");
+        $stmt->execute([':student_id' => $userId,':course_id' => $id]);
+        $isSubscribed = $stmt->fetchColumn();
+        if ($isSubscribed) {
+        return ['success' => false, 'message' => 'You are already subscribed to this course.'];
+        }
+        $stmt = $this->pdo->prepare("INSERT INTO subscriptions (studentId, courseId) VALUES (:student_id, :course_id)");
+        $stmt->execute([':student_id' => $userId,':course_id' => $id]);
+        return ['success' => true];
     }
 
     public function viewAllCourses() {
@@ -359,4 +377,6 @@ class Tag {
 
     }
 }
-?>
+
+
+
