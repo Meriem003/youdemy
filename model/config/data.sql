@@ -62,8 +62,6 @@ CREATE TABLE Subscriptions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     studentId INT NOT NULL,
     courseId INT NOT NULL,
-    status ENUM('in_progress', 'completed') DEFAULT 'in_progress',
-    enrollmentDate DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (studentId) REFERENCES Students(id) ON DELETE CASCADE,
     FOREIGN KEY (courseId) REFERENCES Courses(id) ON DELETE CASCADE
 );

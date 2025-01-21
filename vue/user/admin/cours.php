@@ -7,7 +7,7 @@ $courses = $admin->manageContent();
 if (isset($_GET['id'])) {
     $courseId = $_GET['id'];
     $result = $admin->deleteCourseAdmin($courseId);
-    header("Location: ../../../admin/cours.php"); 
+    header("Location: ..../../../admin/cours.php"); 
     exit();
 }
 ?>
