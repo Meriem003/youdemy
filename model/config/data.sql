@@ -8,23 +8,6 @@ CREATE TABLE Users (
     dataCourse DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-DELIMITER //
-
-CREATE TRIGGER before_user_insert
-BEFORE INSERT ON Users
-FOR EACH ROW
-BEGIN
-    IF NEW.role = 'student' AND NEW.status != 'activer' THEN
-        SET NEW.status = 'activer';
-    END IF;
-
-    IF NEW.role = 'teacher' AND NEW.status != 'inactive' THEN
-        SET NEW.status = 'inactive';
-    END IF;
-END //
-
-DELIMITER ;
-
 CREATE TABLE Courses (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
@@ -38,7 +21,6 @@ CREATE TABLE Courses (
     FOREIGN KEY (categoryId) REFERENCES Categories(id),
     FOREIGN KEY (teacherId) REFERENCES Users(id) ON DELETE CASCADE
 );
-
 
 CREATE TABLE Categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -65,3 +47,21 @@ CREATE TABLE Subscriptions (
     FOREIGN KEY (studentId) REFERENCES Students(id) ON DELETE CASCADE,
     FOREIGN KEY (courseId) REFERENCES Courses(id) ON DELETE CASCADE
 );
+
+
+DELIMITER //
+
+CREATE TRIGGER before_user_insert
+BEFORE INSERT ON Users
+FOR EACH ROW
+BEGIN
+    IF NEW.role = 'student' AND NEW.status != 'activer' THEN
+        SET NEW.status = 'activer';
+    END IF;
+
+    IF NEW.role = 'teacher' AND NEW.status != 'inactive' THEN
+        SET NEW.status = 'inactive';
+    END IF;
+END //
+
+DELIMITER ;

@@ -183,7 +183,7 @@ $courses = $student->viewAllCourses();
             </div>
             <div class="btn-container">
             <a href="?idView=<?= $row['id'] ?>" class="btn">View Details</a>
-            <a href="mescourses.php?id=<?= $row['id']?>&iduser=<?=$_SESSION["id"]?>" class="btn">Subscribe</a>
+            <a href="courses.php?id=<?= $row['id']?>&iduser=<?=$_SESSION["id"]?>" class="btn">Subscribe</a>
             </div>
         </div>
     <?php endforeach; ?>

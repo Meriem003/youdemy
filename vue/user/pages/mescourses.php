@@ -188,7 +188,6 @@ if (isset($_SESSION['id'])) {
                 <p><?= htmlspecialchars($course['course_description'] ?? 'Description Not Available') ?></p>
             </div>
             <div class="btn-container">
-            <a href="courses.php?idView=<?= $row['id'] ?>" class="btn">remove</a>
             <a href="courses.php?idView=<?= $row['id'] ?>" class="btn">View Details</a>
             </div>
         </div>

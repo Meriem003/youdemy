@@ -62,7 +62,6 @@ class User {
 }
 
 class Student extends User {
-    private $coursesList;
     private $pdo;
 
     public function __construct($pdo, $id, $name, $email, $password, $role, $status, $createdAT) {
@@ -103,11 +102,6 @@ class Student extends User {
             $courses[] = $row;
         }
         return $courses;
-    }
-    
-    
-    public function removeCourse($course) {
-
     }
 }
 
