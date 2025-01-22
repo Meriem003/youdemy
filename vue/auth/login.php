@@ -44,7 +44,7 @@ if (isset($_POST['submit'])) {
       </form>
 
       <div class="icons">
-      <div id="menu-btn" class="fas fa-bars"></div>
+         <div id="menu-btn" class="fas fa-bars"></div>
          <div id="search-btn" class="fas fa-search"></div>
          <div id="user-btn" class="fas fa-user"></div>
          <div id="toggle-btn" class="fas fa-sun" style="display: none;"></div>
@@ -75,9 +75,8 @@ if (isset($_POST['submit'])) {
 
    <nav class="navbar">
       <a href="../user/pages/about.php"><i class="fas fa-home"></i><span>home</span></a>
-      <a href="../user/pages/courses.php"><i class="fas fa-graduation-cap"></i><span>courses</span></a>
-      <a href="../user/pages/teachers.php"><i class="fas fa-chalkboard-user"></i><span>teachers</span></a>
-      <a href="../user/pages/ourCourses.php"><i class="fa-solid fa-book-open"></i><span>mes Courses</span></a>
+      <a href="../User/pages/courses.php"><i class="fas fa-graduation-cap"></i><span>courses</span></a>
+      <a href="../user/pages/mescourses.php"><i class="fa-solid fa-book-open"></i><span>mes Courses</span></a>
       <a href="../user/pages/contact.php"><i class="fas fa-headset"></i><span>contact us</span></a>
    </nav>
    
@@ -91,6 +90,7 @@ if (isset($_POST['submit'])) {
       <p>your password <span>*</span></p>
       <input type="password" name="password" placeholder="enter your password" required maxlength="20" class="box">
       <input type="submit" value="login" name="submit" class="btn">
+      <a href="./register.php">register<a>
    </form>
 </section>
 

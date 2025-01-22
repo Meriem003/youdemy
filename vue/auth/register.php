@@ -69,9 +69,8 @@ try {
 
    <nav class="navbar">
       <a href="../user/pages/about.php"><i class="fas fa-home"></i><span>home</span></a>
-      <a href="../user/pages/courses.php"><i class="fas fa-graduation-cap"></i><span>courses</span></a>
-      <a href="../user/pages/teachers.php"><i class="fas fa-chalkboard-user"></i><span>teachers</span></a>
-      <a href="../user/pages/ourCourses.php"><i class="fa-solid fa-book-open"></i><span>mes Courses</span></a>
+      <a href="../User/pages/courses.php"><i class="fas fa-graduation-cap"></i><span>courses</span></a>
+      <a href="../user/pages/mescourses.php"><i class="fa-solid fa-book-open"></i><span>mes Courses</span></a>
       <a href="../user/pages/contact.php"><i class="fas fa-headset"></i><span>contact us</span></a>
    </nav>
 

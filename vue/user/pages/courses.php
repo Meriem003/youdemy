@@ -2,11 +2,7 @@
 require '../../../model/config/conn.php';
 require '../../../model/class/class.php';
 session_start();
-if (!isset($_SESSION['status']) || $_SESSION['status'] !== "activer") {
-    header("Location: ../../auth/login.php");
-    exit;
-}
-$student = new Student($pdo, $_SESSION['id'], $_SESSION['name'], $_SESSION['email'], null, null, null, null);
+$student = new Student($pdo, null, null, null, null, null, null, null);
 if (isset($_GET['id']) && isset($_SESSION['id'])) {
     $courseId = intval($_GET['id']);
     $userId = $_SESSION['id'];
@@ -183,7 +179,7 @@ $courses = $student->viewAllCourses();
             </div>
             <div class="btn-container">
             <a href="?idView=<?= $row['id'] ?>" class="btn">View Details</a>
-            <a href="courses.php?id=<?= $row['id']?>&iduser=<?=$_SESSION["id"]?>" class="btn">Subscribe</a>
+            <a href="courses.php?id=<?= $row['id']?>" class="btn">Subscribe</a>
             </div>
         </div>
     <?php endforeach; ?>
